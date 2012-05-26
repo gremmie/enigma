@@ -4,12 +4,12 @@
 
 """Contains factory functions for creating rotors and reflectors."""
 
-from enigma.rotors import RotorError
-from enigma.rotors.rotor import Rotor
-from enigma.rotors.data import ROTORS, REFLECTORS
+from . import RotorError
+from .rotor import Rotor
+from .data import ROTORS, REFLECTORS
 
 
-def create_rotor(model, ring_setting, alpha_labels=True):
+def create_rotor(model, ring_setting=0, alpha_labels=True):
     """Factory function to create and return a rotor of the given model name."""
 
     if model in ROTORS:
