@@ -96,7 +96,7 @@ class Rotor:
         self.wiring_str = wiring.upper()
         self.ring_setting = ring_setting
         self.alpha_labels = alpha_labels
-        self.pos = None     # not installed in an Enigma machine yet
+        self.pos = 0
 
         # check wiring length
         if len(self.wiring_str) != 26:
