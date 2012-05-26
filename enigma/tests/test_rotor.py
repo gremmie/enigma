@@ -66,19 +66,21 @@ class SimpleRotorTestCase(unittest.TestCase):
                 self.assertEqual(s, rotor.get_display())
 
     def test_wiring(self):
-        rotor = Rotor('I', WIRING, ring_setting=0, alpha_labels=True)
 
-        for n, d in enumerate(ALPHA_LABELS):
-            rotor.set_display(d)
+        for r in range(26):
+            rotor = Rotor('I', WIRING, ring_setting=r, alpha_labels=True)
 
-            wiring = collections.deque(WIRING)
-            wiring.rotate(-n)
+            for n, d in enumerate(ALPHA_LABELS):
+                rotor.set_display(d)
 
-            for i in range(26):
-                output = rotor.signal_in(i)
+                wiring = collections.deque(WIRING)
+                wiring.rotate(r - n)
 
-                expected = (ord(wiring[i]) - ord('A') - n) % 26
-                self.assertEqual(output, expected)
+                for i in range(26):
+                    output = rotor.signal_in(i)
 
-                output = rotor.signal_out(expected)
-                self.assertEqual(output, i)
+                    expected = (ord(wiring[i]) - ord('A') + r - n) % 26
+                    self.assertEqual(output, expected)
+
+                    output = rotor.signal_out(expected)
+                    self.assertEqual(output, i)
