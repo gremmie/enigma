@@ -8,7 +8,8 @@ import unittest
 import collections
 import string
 
-from rotors.rotor import Rotor, RotorError, ALPHA_LABELS, NUMERIC_LABELS
+from ..rotors.rotor import Rotor, ALPHA_LABELS, NUMERIC_LABELS
+from ..rotors import RotorError
 
 
 WIRING = 'EKMFLGDQVZNTOWYHXUSPAIBRCJ'

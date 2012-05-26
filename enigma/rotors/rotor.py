@@ -7,9 +7,8 @@
 import string
 import collections
 
+from . import RotorError
 
-class RotorError(Exception):
-    pass
 
 ALPHA_LABELS = string.ascii_uppercase
 NUMERIC_LABELS = ['{:02d}'.format(n) for n in range(1, 27)]
