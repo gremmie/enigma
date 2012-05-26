@@ -4,6 +4,7 @@
 # Py-Enigma is released under the MIT License (see License.txt).
 
 import unittest
+import collections
 import string
 
 from rotors.rotor import Rotor, RotorError, ALPHA_LABELS, NUMERIC_LABELS
@@ -66,14 +67,18 @@ class SimpleRotorTestCase(unittest.TestCase):
 
     def test_wiring(self):
         rotor = Rotor('I', WIRING, ring_setting=0, alpha_labels=True)
-        rotor.set_display('A')
 
-        for i, s in enumerate(ALPHA_LABELS):
-            pos = ord(s) - ord('A')
-            output = rotor.signal_in(pos)
+        for n, d in enumerate(ALPHA_LABELS):
+            rotor.set_display(d)
 
-            expected = ord(WIRING[i]) - ord('A')
-            self.assertEqual(output, expected)
+            wiring = collections.deque(WIRING)
+            wiring.rotate(-n)
 
-            output = rotor.signal_out(expected)
-            self.assertEqual(output, i)
+            for i in range(26):
+                output = rotor.signal_in(i)
+
+                expected = (ord(wiring[i]) - ord('A') - n) % 26
+                self.assertEqual(output, expected)
+
+                output = rotor.signal_out(expected)
+                self.assertEqual(output, i)
