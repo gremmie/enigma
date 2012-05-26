@@ -12,6 +12,8 @@ import collections
 class RotorError(Exception):
     pass
 
+ALPHA_LABELS = string.ascii_uppercase
+NUMERIC_LABELS = ['{:02d}'.format(n) for n in range(1, 27)]
 
 # In specifying a wiring for a rotor, every letter must be included exactly
 # once. This variable helps us enforce that:
@@ -91,7 +93,6 @@ class Rotor:
         self.name = model_name
         self.wiring_str = wiring.upper()
         self.ring_setting = ring_setting
-        self.stepping_parms = stepping
         self.alpha_labels = alpha_labels
         self.pos = None     # not installed in an Enigma machine yet
 
@@ -123,13 +124,27 @@ class Rotor:
             self.exit_map[v] = i
 
         # configure ring labels
-        if alpha_labels:
-            self.ring_labels = string.ascii_uppercase
-        else:
-            self.ring_labels = ['{:02d}'.format(n) for n in range(1, 27)]
+        self.ring_labels = ALPHA_LABELS if alpha_labels else NUMERIC_LABELS
 
         # for mapping window display values to indices
         self.display_map = dict(zip(self.ring_labels, range(26)))
+
+        # build step list: this is a list of positions where our notches are in
+        # place to allow the pawls to move
+        step_list = []
+        if isinstance(stepping, str):
+            step_list = [stepping]
+        elif isinstance(stepping, tuple) or isinstance(stepping, list):
+            step_list = stepping
+        elif stepping is not None:
+            raise RotorError("stepping")
+
+        self.step_set = set()
+        for pos in step_list:
+            if pos in self.display_map:
+                self.step_set.add(self.display_map[pos])
+            else:
+                raise RotorError("stepping: %s" % pos)
 
     def set_display(self, val):
         """Spin the rotor such that the string val appears in the operator
