@@ -56,8 +56,8 @@ class Rotor:
     its own turnover position.
 
     Note that we allow the stepping parameter to be None. This indicates the
-    rotor does not rotate. This allows us to model the entry wheel and receivers
-    as stationary rotors.
+    rotor does not rotate. This allows us to model the entry wheel and
+    reflectors as stationary rotors.
     
     """
 
@@ -78,12 +78,16 @@ class Rotor:
         the letter "A" is fixed to pin 0. A value of 1 means "B" is mapped to
         pin 0.
 
-        stepping - this is the stepping or turnover parameter. It can be a
-        simple string such as "R". This will indicate that when the rotor
-        transitions from "Q" to "R" (by observing the operator window), the
-        rotor will "kick" the rotor to its left, causing it to rotate. If the
-        rotor has more than one notch, this parameter should be a list of letter
-        positions, e.g. ['A', 'N'].
+        stepping - this is the stepping or turnover parameter. It should be an
+        iterable, for example a string such as "Q". This will indicate that when
+        the rotor transitions from "Q" to "R" (by observing the operator
+        window), the rotor will "kick" the rotor to its left, causing it to
+        rotate. If the rotor has more than one notch, a string of length 2 could
+        be used, e.g. "ZM".  Another way to think of this parameter is that when
+        a character in the stepping string is visible in the operator window, a
+        notch is lined up with the pawl on the left side of the rotor.  This
+        will allow the pawl to push up on the rotor to the left when the next
+        key is depressed.
 
         alpha_labels - when True, the letters A-Z are used for the rotor ring
         labels. If False, numeric string labels (01-26) are used.
@@ -115,7 +119,6 @@ class Rotor:
         # Create two lists to describe the internal wiring. Two lists are used
         # to do fast lookup from both entry (from the right) and exit (from the
         # left). 
-        
         self.entry_map = [ord(pin) - ord('A') for pin in self.wiring_str]
         
         self.exit_map = [0] * 26
@@ -130,20 +133,13 @@ class Rotor:
 
         # build step list: this is a list of positions where our notches are in
         # place to allow the pawls to move
-        step_list = []
-        if isinstance(stepping, str):
-            step_list = [stepping]
-        elif isinstance(stepping, tuple) or isinstance(stepping, list):
-            step_list = stepping
-        elif stepping is not None:
-            raise RotorError("stepping")
-
         self.step_set = set()
-        for pos in step_list:
-            if pos in self.display_map:
-                self.step_set.add(self.display_map[pos])
-            else:
-                raise RotorError("stepping: %s" % pos)
+        if stepping is not None:
+            for pos in stepping:
+                if pos in self.display_map:
+                    self.step_set.add(self.display_map[pos])
+                else:
+                    raise RotorError("stepping: %s" % pos)
 
     def set_display(self, val):
         """Spin the rotor such that the string val appears in the operator
