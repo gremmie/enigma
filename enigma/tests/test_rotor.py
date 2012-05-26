@@ -67,7 +67,10 @@ class SimpleRotorTestCase(unittest.TestCase):
                 self.assertEqual(s, rotor.get_display())
 
     def test_wiring(self):
-
+        """Loop through all ring settings & rotor positions and test the
+        wiring.
+        
+        """
         for r in range(26):
             rotor = Rotor('I', WIRING, ring_setting=r, alpha_labels=True)
 
