@@ -10,7 +10,7 @@ from ..rotors.factory import create_rotor, create_reflector
 from ..machine import EnigmaMachine
 
 
-class EnigmaMachineTestCase(unittest.TestCase):
+class SteppingTestCase(unittest.TestCase):
 
     def test_double_stepping(self):
         """Ensure the rotors step realistically by testing for a "double-step"
@@ -34,3 +34,30 @@ class EnigmaMachineTestCase(unittest.TestCase):
             m.key_press('A')
             self.assertEqual(m.get_display(), expected)
 
+
+class SimpleCipherTestCase(unittest.TestCase):
+    """This example taken from Wikipedia"""
+
+    PLAIN_TEXT = 'AAAAA'
+    CIPHER_TEXT = 'BDZGO'
+
+    def setUp(self):
+        rotors = []
+        rotors.append(create_rotor('I'))
+        rotors.append(create_rotor('II'))
+        rotors.append(create_rotor('III'))
+
+        reflector = create_reflector('B')
+
+        self.machine = EnigmaMachine(rotors=rotors, reflector=reflector)
+        self.machine.set_display('AAA')
+
+    def test_simple_encrypt(self):
+
+        cipher_text = self.machine.process_text(self.PLAIN_TEXT)
+        self.assertEqual(cipher_text, self.CIPHER_TEXT)
+
+    def test_simple_decrypt(self):
+
+        plain_text = self.machine.process_text(self.CIPHER_TEXT)
+        self.assertEqual(plain_text, self.PLAIN_TEXT)
