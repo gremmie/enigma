@@ -19,7 +19,7 @@ KEYBOARD_CHARS = string.ascii_uppercase
 class EnigmaMachine:
     """Top-level class for the Enigma Machine simulation."""
 
-    def __init__(self, rotors, reflector):
+    def __init__(self, rotors, reflector, plugboard):
         """Configures the Enigma Machine. Parameters are as follows:
 
         rotors - a list containing 3 or 4 (for the Kriegsmarine M4 version)
@@ -28,6 +28,8 @@ class EnigmaMachine:
         operator's perspective sitting at the machine).
 
         reflector - a rotor object to represent the reflector
+
+        plugboard - a plugboard object to represent the state of the plugboard
 
         Note that on the military Enigma machines we are simulating, the entry
         wheel is a simple straight-pass through and is not simulated here. It
@@ -42,6 +44,7 @@ class EnigmaMachine:
         self.rotors = rotors
         self.rotor_count = len(rotors)
         self.reflector = reflector
+        self.plugboard = plugboard
 
     def set_display(self, val):
         """Sets the rotor operator windows to 'val'.
@@ -82,7 +85,6 @@ class EnigmaMachine:
         self._step_rotors()
 
         # simulate the electrical operations:
-        # TODO: plugboard
         signal_num = ord(key) - ord('A')
         lamp_num = self._electric_signal(signal_num)
         return KEYBOARD_CHARS[lamp_num]
@@ -128,9 +130,8 @@ class EnigmaMachine:
         Returns a lamp number to light (an integer 0-25).
 
         """
-        # TODO Plugboard
+        pos = self.plugboard.signal(signal_num)
 
-        pos = signal_num
         for rotor in reversed(self.rotors):
             pos = rotor.signal_in(pos)
 
@@ -139,7 +140,7 @@ class EnigmaMachine:
         for rotor in self.rotors:
             pos = rotor.signal_out(pos)
 
-        return pos
+        return self.plugboard.signal(pos)
 
     def process_text(self, text):
         """Run the text through the machine, simulating a key press for each

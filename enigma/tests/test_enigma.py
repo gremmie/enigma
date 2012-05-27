@@ -8,6 +8,7 @@ import unittest
 
 from ..rotors.factory import create_rotor, create_reflector
 from ..machine import EnigmaMachine
+from ..plugboard import Plugboard
 
 
 class SteppingTestCase(unittest.TestCase):
@@ -25,7 +26,7 @@ class SteppingTestCase(unittest.TestCase):
         rotors.append(create_rotor("II"))
         rotors.append(create_rotor("I"))
 
-        m = EnigmaMachine(rotors, create_reflector('B'))
+        m = EnigmaMachine(rotors, create_reflector('B'), Plugboard())
 
         m.set_display('KDO')
 
@@ -49,7 +50,8 @@ class SimpleCipherTestCase(unittest.TestCase):
 
         reflector = create_reflector('B')
 
-        self.machine = EnigmaMachine(rotors=rotors, reflector=reflector)
+        self.machine = EnigmaMachine(rotors=rotors, reflector=reflector,
+                                     plugboard=Plugboard())
         self.machine.set_display('AAA')
 
     def test_simple_encrypt(self):
