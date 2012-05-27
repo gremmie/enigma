@@ -2,21 +2,14 @@
 # This file is part of Py-Enigma, the Enigma Machine simulation.
 # Py-Enigma is released under the MIT License (see License.txt).
 
+from .machine import EnigmaMachine
 
-from rotors.factory import create_rotor
-from rotors.factory import create_reflector
-from machine import EnigmaMachine
 
 def main():
 
-    rotors = []
-    rotors.append(create_rotor('I'))
-    rotors.append(create_rotor('II'))
-    rotors.append(create_rotor('III'))
-
-    reflector = create_reflector('B')
-
-    machine = EnigmaMachine(rotors=rotors, reflector=reflector)
+    machine = EnigmaMachine.from_key_sheet(
+                        rotors=['I', 'II', 'III'],
+                        reflector='B')
 
     machine.set_display('AAA')
     cipher_text = machine.process_text('AAAAA')
