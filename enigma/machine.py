@@ -8,6 +8,10 @@ simulation.
 """
 import string
 
+from .rotors.factory import create_rotor, create_reflector
+from .plugboard import Plugboard
+
+
 class EnigmaError(Exception):
     pass
 
@@ -45,6 +49,40 @@ class EnigmaMachine:
         self.rotor_count = len(rotors)
         self.reflector = reflector
         self.plugboard = plugboard
+
+    @classmethod
+    def from_key_sheet(cls, rotors, ring_settings=(0, 0, 0), reflector='B',
+            plugboard_settings=''):
+        """Convenience function to build an EnigmaMachine from the data as you
+        might find it on a key sheet:
+
+        rotors: a list of strings naming the rotors from left to right;
+            e.g. ["I", "III", "IV"]
+
+        ring_settings: an iterable of integers representing the ring settings to
+        be applied to the rotors in the rotors list
+
+        reflector: a string that names the reflector to use
+
+        plugboard: a string of plugboard settings as you might find on a key
+        sheet; e.g. 'PO ML IU KJ NH YT GB VF RE DC' 
+
+        """
+        # validate inputs
+        num_rotors = len(rotors)
+        if num_rotors not in (3, 4):
+            raise EnigmaError("invalid rotors list size")
+
+        if num_rotors != len(ring_settings):
+            raise EnigmaError("please provide %d ring settings" % num_rotors)
+
+        # assemble the machine
+        rotor_list = [create_rotor(r[0], r[1]) for r in zip(rotors, ring_settings)]
+
+        return cls(rotor_list, 
+                   create_reflector(reflector),
+                   Plugboard(plugboard_settings))
+
 
     def set_display(self, val):
         """Sets the rotor operator windows to 'val'.
