@@ -57,6 +57,13 @@ class EnigmaMachine:
         for i, r in enumerate(range(start, self.rotor_count)):
             self.rotors[r].set_display(val[i])
 
+    def get_display(self):
+        """Returns the operator display as a string."""
+
+        return "{}{}{}".format(self.rotors[-3].get_display(),
+                               self.rotors[-2].get_display(),
+                               self.rotors[-1].get_display())
+
     def key_press(self, key):
         """Simulate a front panel key press. 
 
