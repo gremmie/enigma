@@ -97,6 +97,7 @@ class Rotor:
         self.ring_setting = ring_setting
         self.alpha_labels = alpha_labels
         self.pos = 0
+        self.rotations = 0
 
         # check wiring length
         if len(self.wiring_str) != 26:
@@ -156,6 +157,8 @@ class Rotor:
         If the rotor is not using alphabetic ring labels, val must be a string
         of the form '01' - '26'.
 
+        Setting the display resets the internal rotation counter to 0.
+
         """
         s = val.upper()
         if s not in self.display_map:
@@ -164,6 +167,7 @@ class Rotor:
         index = self.display_map[s]
 
         self.pos = (index - self.ring_setting) % 26
+        self.rotations = 0
 
     def get_display(self):
         """Returns what is currently being displayed in the operator window."""
@@ -207,3 +211,15 @@ class Rotor:
         # turn back into a position due to rotation
         return (pin - self.pos) % 26
 
+    def notch_over_pawl(self):
+        """Return True if this rotor has a notch in the stepping position and
+        False otherwise.
+
+        """
+        return self.pos in self.step_set
+
+    def rotate(self):
+        """Rotate the rotor forward due to mechanical stepping action."""
+
+        self.pos = (self.pos + 1) % 26
+        self.rotations += 1
