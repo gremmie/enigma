@@ -51,37 +51,51 @@ class EnigmaMachine:
         self.plugboard = plugboard
 
     @classmethod
-    def from_key_sheet(cls, rotors, ring_settings=(0, 0, 0), reflector='B',
-            plugboard_settings=''):
+    def from_key_sheet(cls, rotors='I II III', ring_settings=None,
+            reflector='B', plugboard_settings=None):
+
         """Convenience function to build an EnigmaMachine from the data as you
         might find it on a key sheet:
 
-        rotors: a list of strings naming the rotors from left to right;
-            e.g. ["I", "III", "IV"]
+        rotors: either a list of strings naming the rotors from left to right
+        or a single string:
+            e.g. ["I", "III", "IV"] or "I III IV"
 
-        ring_settings: an iterable of integers representing the ring settings to
-        be applied to the rotors in the rotors list
+        ring_settings: an iterable of integers or None representing the ring
+        settings to be applied to the rotors in the rotors list. None means all
+        ring settings are 0.
 
         reflector: a string that names the reflector to use
 
         plugboard: a string of plugboard settings as you might find on a key
-        sheet; e.g. 'PO ML IU KJ NH YT GB VF RE DC' 
+        sheet; e.g. 
+            'PO ML IU KJ NH YT GB VF RE DC' 
+        or
+            '18/26 17/4 21/6 3/16 19/14 22/7 8/1 12/25 5/9 10/15'
+
+            A value of None means no plugboard connections are made.
 
         """
         # validate inputs
+        if isinstance(rotors, str):
+            rotors = rotors.split()
+
         num_rotors = len(rotors)
         if num_rotors not in (3, 4):
             raise EnigmaError("invalid rotors list size")
 
+        if ring_settings is None:
+            ring_settings = [0] * num_rotors
+
         if num_rotors != len(ring_settings):
-            raise EnigmaError("please provide %d ring settings" % num_rotors)
+            raise EnigmaError("# of rotors doesn't match # of ring settings")
 
         # assemble the machine
         rotor_list = [create_rotor(r[0], r[1]) for r in zip(rotors, ring_settings)]
 
         return cls(rotor_list, 
                    create_reflector(reflector),
-                   Plugboard(plugboard_settings))
+                   Plugboard.from_key_sheet(plugboard_settings))
 
 
     def set_display(self, val):

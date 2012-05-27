@@ -5,12 +5,12 @@
 """Contains the Plugboard class for simulating the plugboard component."""
 
 import collections
+from itertools import chain
 import string
 
 
-# Like the keyboard, the plugboard has plugs for each upper case letter of the
-# alphabet:
-PLUGBOARD_LABELS = string.ascii_uppercase
+# On Wehrmacht models, the plugs are labeled with upper case letters
+WEHRMACHT_LABELS = string.ascii_uppercase
 
 # The number of plugboard cables supplied with a machine:
 MAX_PAIRS = 10
@@ -21,25 +21,73 @@ class PlugboardError(Exception):
 
 
 class Plugboard:
-    """The plugboard allows the operator to swap letters before and after the
+    """The plugboard allows the operator to swap letters before and after the 
     entry wheel. This is accomplished by connecting cables between pairs of
-    plugs that are marked with letters. Ten cables were issued with each
-    machine; thus up to 10 of these swappings could be used as part of a machine
-    setup.
+    plugs that are marked with letters (Wehrmacht) or numbers (Kriegsmarine).
+    Ten cables were issued with each machine; thus up to 10 of these swappings
+    could be used as part of a machine setup.
 
     Each cable swaps both the input and output signals. Thus if A is connected
     to B, A crosses to B in the keyboard to entry wheel direction and also in
-    the entry wheel to lamp direction.
+    the reverse entry wheel to lamp direction.
 
     """
+    def __init__(self, wiring_pairs=None):
+        """Configure the plugboard according to a list or tuple of integer
+        pairs, or None.
 
-    def __init__(self, settings=''):
-        """Configure the plugboard according to a settings string:
+        A value of None or an empty list/tuple indicates no plugboard
+        connections are to be used (a straight mapping).
 
-        settings - a string consisting of pairs of letters separated by
-        whitespace. This is the format used in the key sheets (code books) to
-        specify daily settings for the Enigma Machine.
-        E.g. 'PO ML IU KJ NH YT GB VF RE DC' 
+        Otherwise wiring_pairs must be an iterable of integer pairs, where each
+        integer is between 0-25, inclusive. At most 10 such pairs can be
+        specified. Each value represents an input/output path through the
+        plugboard. It is invalid to specify the same path more than once in the
+        list.
+
+        If an invalid wiring_pairs parameter is given, a PlugboardError is
+        raised.
+
+        """
+        # construct wiring mapping table with default 1-1 mappings
+        self.wiring_map = list(range(26))
+
+        # use settings if provided
+        if not wiring_pairs:
+            return
+
+        if len(wiring_pairs) > MAX_PAIRS:
+            raise PlugboardError('Please specify %d or less pairs' % MAX_PAIRS)
+
+        # ensure a path occurs at most once in the list
+        counter = collections.Counter(chain.from_iterable(wiring_pairs))
+        path, count = counter.most_common(1)[0]
+        if count != 1:
+            raise PlugboardError('duplicate connection: %d' % path)
+
+        # make the connections
+        for pair in wiring_pairs:
+            m = pair[0]
+            n = pair[1]
+            if not (0 <= m < 26) or not (0 <= n < 26):
+                raise PlugboardError('invalid connection: %s' % str(pair))
+
+            self.wiring_map[m] = n
+            self.wiring_map[n] = m
+
+    @classmethod
+    def from_key_sheet(cls, settings=None):
+        """Configure the plugboard according to a settings string as you may
+        find on a key sheet.
+
+        Two syntaxes are supported, the Wehrmacht and Kriegsmarine styles:
+
+        In the Wehrmacht syntax, the settings are given as a string of
+        alphabetic pairs. For example: 'PO ML IU KJ NH YT GB VF RE DC' 
+
+        In the Kriegsmarine syntax, the settings are given as a string of number
+        pairs, separated by a '/'. Note that the numbering uses 1-26, inclusive.
+        For example: '18/26 17/4 21/6 3/16 19/14 22/7 8/1 12/25 5/9 10/15'
 
         To specify no plugboard connections, settings can be None or an empty
         string.
@@ -49,42 +97,39 @@ class Plugboard:
         most once in the settings string.
 
         """
-        # construct wiring mapping table with default 1-1 mappings
-        self.wiring_map = list(range(len(PLUGBOARD_LABELS)))
+        if not settings:
+            return cls(None)
 
-        # use settings if provided
-        self.settings = []
-        pairs = settings.split() if settings is not None else []
-
-        if len(pairs) > MAX_PAIRS:
-            raise PlugboardError('too many connections')
-        elif len(pairs) == 0:
-            return      # we are done, no mappings to perform
-
-        # convert to upper case
-        pairs = [pair.upper() for pair in pairs]
-
-        # validate pairings
-        for pair in pairs:
-            if len(pair) != 2:
-                raise PlugboardError('invalid pair length: %s' % pair)
-            for c in pair:
-                if c not in PLUGBOARD_LABELS:
-                    raise PlugboardError('invalid letter: %s' % c)
+        wiring_pairs = []
         
-        # validate each letter appears at most once
-        counter = collections.Counter(''.join(pairs))
-        letter, count = counter.most_common(1)[0]
-        if count != 1:
-            raise PlugboardError('duplicate connection: %s' % letter)
+        # detect which syntax is being used
+        if settings.find('/') != -1:
+            # Kriegsmarine syntax
+            pairs = settings.split()
+            for p in pairs:
+                try:
+                    m, n = p.split('/')
+                    m, n = int(m), int(n)
+                except ValueError:
+                    raise PlugboardError('invalid pair: %s' % p)
 
-        # settings seems valid, make the internal wiring changes now:
-        for pair in pairs:
-            m, n = ord(pair[0]) - ord('A'), ord(pair[1]) - ord('A')
-            self.wiring_map[m] = n
-            self.wiring_map[n] = m
+                wiring_pairs.append((m - 1, n - 1))
+        else:
+            # Wehrmacht syntax
+            pairs = settings.upper().split()
 
-        self.settings = ' '.join(pairs)
+            for p in pairs:
+                if len(p) != 2:
+                    raise PlugboardError('invalid pair: %s' % p)
+
+                m = p[0]
+                n = p[1]
+                if m not in WEHRMACHT_LABELS or n not in WEHRMACHT_LABELS:
+                    raise PlugboardError('invalid pair: %s' % p)
+
+                wiring_pairs.append((ord(m) - ord('A'), ord(n) - ord('A')))
+
+        return cls(wiring_pairs)
 
     def signal(self, n):
         """Simulate a signal entering the plugboard on wire n, where n must be
