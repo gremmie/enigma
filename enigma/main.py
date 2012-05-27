@@ -18,16 +18,10 @@ def main():
 
     machine = EnigmaMachine(rotors=rotors, reflector=reflector)
 
-    machine.set_display('AAB')
-    machine.cipher('A')
-    machine.set_display('AAC')
-    machine.cipher('A')
-    machine.set_display('AAD')
-    machine.cipher('A')
-    machine.set_display('AAE')
-    machine.cipher('A')
-    machine.set_display('AAF')
-    machine.cipher('A')
+    machine.set_display('AAA')
+    cipher_text = machine.process_text('AAAAA')
+
+    print(cipher_text)
 
 
 if __name__ == '__main__':

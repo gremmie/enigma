@@ -11,6 +11,10 @@ import string
 class EnigmaError(Exception):
     pass
 
+# The Enigma keyboard consists of the 26 letters of the alphabet, uppercase
+# only:
+KEYBOARD_CHARS = string.ascii_uppercase
+
 
 class EnigmaMachine:
     """Top-level class for the Enigma Machine simulation."""
@@ -39,51 +43,106 @@ class EnigmaMachine:
         self.rotor_count = len(rotors)
         self.reflector = reflector
 
-
     def set_display(self, val):
+        """Sets the rotor operator windows to 'val'.
 
-        for i, rotor in enumerate(self.rotors):
-            self.rotors[i].set_display(val[i])
+        'val' must be a string or iterable containing 3 values, one for each
+        window from left to right.
 
+        """
+        if len(val) != 3:
+            raise EnigmaError("Bad display value")
 
-    def cipher(self, plaintext):
+        start = 0 if self.rotor_count == 3 else 1
+        for i, r in enumerate(range(start, self.rotor_count)):
+            self.rotors[r].set_display(val[i])
 
-        # TODO: This is just placeholder code until I can figure out what I am
-        # doing...!
+    def key_press(self, key):
+        """Simulate a front panel key press. 
 
-        if len(plaintext) != 1:
-            raise EnigmaError("not implemented yet")
-        if plaintext[0] not in string.ascii_uppercase:
-            raise EnigmaError("invalid input: %s" % plaintext)
+        key - a string representing the letter pressed
 
-        x = ord(plaintext[0]) - ord('A')
+        The rotors are stepped by simulating the mechanical action of the
+        machine. 
+        Next a simulated current is run through the machine.
+        The lamp that is lit by this key press is returned as a string.
 
-        x = self.rotors[-1].signal_in(x)
-        print(chr(x + ord('A')))
-        x = self.rotors[-2].signal_in(x)
-        print(chr(x + ord('A')))
-        x = self.rotors[-3].signal_in(x)
-        print(chr(x + ord('A')))
+        """
+        if key not in KEYBOARD_CHARS:
+            raise EnigmaError('illegal key press %s' % key)
 
-        if self.rotor_count == 4:
-            x = self.rotors[-4].signal_in(x)
-            print(chr(x + ord('A')))
+        # simulate the mechanical action of the machine
+        self._step_rotors()
 
-        x = self.reflector.signal_in(x)
-        print(chr(x + ord('A')))
+        # simulate the electrical operations:
+        # TODO: plugboard
+        signal_num = ord(key) - ord('A')
+        lamp_num = self._electric_signal(signal_num)
+        return KEYBOARD_CHARS[lamp_num]
 
-        x = self.rotors[0].signal_out(x)
-        print(chr(x + ord('A')))
-        x = self.rotors[1].signal_out(x)
-        print(chr(x + ord('A')))
-        x = self.rotors[2].signal_out(x)
-        print(chr(x + ord('A')))
+    def _step_rotors(self):
+        """Simulate the mechanical action of pressing a key."""
+        
+        # The right-most rotor's right-side ratchet is always over a pawl, and
+        # it has no neighbor to the right, so it always rotates.
+        #
+        # The middle rotor will rotate if either:
+        #   1) The right-most rotor's left side notch is over the 2nd pawl
+        #       or
+        #   2) It has a left-side notch over the 3rd pawl
+        #
+        # The third rotor (from the right) will rotate only if the middle rotor
+        # has a left-side notch over the 3rd pawl.
+        #
+        # Kriegsmarine model M4 has 4 rotors, but the 4th rotor (the leftmost)
+        # does not rotate (they did not add a 4th pawl to the mechanism).
 
-        if self.rotor_count == 4:
-            x = self.rotors[3].signal_out(x)
-            print(chr(x + ord('A')))
+        rotor1 = self.rotors[-1]
+        rotor2 = self.rotors[-2]
+        rotor3 = self.rotors[-3]
 
-        ciphertext = chr(x + ord('A'))
+        # decide which rotors can move
+        rotate2 = rotor1.notch_over_pawl() or rotor2.notch_over_pawl()
+        rotate3 = rotor2.notch_over_pawl()
 
-        print("%s => %s" % (plaintext, ciphertext))
+        # move rotors
+        rotor1.rotate()
+        if rotate2:
+            rotor2.rotate()
+        if rotate3:
+            rotor3.rotate()
 
+    def _electric_signal(self, signal_num):
+        """Simulate running an electric signal through the machine in order to
+        perform an encrypt or decrypt operation
+
+        signal_num - the wire (0-25) that the simulated current occurs on
+
+        Returns a lamp number to light (an integer 0-25).
+
+        """
+        # TODO Plugboard
+
+        pos = signal_num
+        for rotor in reversed(self.rotors):
+            pos = rotor.signal_in(pos)
+
+        pos = self.reflector.signal_in(pos)
+
+        for rotor in self.rotors:
+            pos = rotor.signal_out(pos)
+
+        return pos
+
+    def process_text(self, text):
+        """Run the text through the machine, simulating a key press for each
+        letter in the text.
+
+        """
+        # TODO: if there is a character not on the keyboard, perform a
+        # substitution or skip it.
+        result = []
+        for key in text:
+            result.append(self.key_press(key))
+
+        return ''.join(result)
