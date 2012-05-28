@@ -114,7 +114,7 @@ class Plugboard:
                     m, n = p.split('/')
                     m, n = int(m), int(n)
                 except ValueError:
-                    raise PlugboardError('invalid pair: %s' % p)
+                    raise PlugboardError('invalid pair: %s' % str(p))
 
                 wiring_pairs.append((m - 1, n - 1))
         else:
@@ -123,12 +123,12 @@ class Plugboard:
 
             for p in pairs:
                 if len(p) != 2:
-                    raise PlugboardError('invalid pair: %s' % p)
+                    raise PlugboardError('invalid pair: %s' % str(p))
 
                 m = p[0]
                 n = p[1]
                 if m not in WEHRMACHT_LABELS or n not in WEHRMACHT_LABELS:
-                    raise PlugboardError('invalid pair: %s' % p)
+                    raise PlugboardError('invalid pair: %s' % str(p))
 
                 wiring_pairs.append((ord(m) - ord('A'), ord(n) - ord('A')))
 
