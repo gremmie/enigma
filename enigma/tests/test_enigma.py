@@ -50,7 +50,7 @@ class SimpleCipherTestCase(unittest.TestCase):
         self.assertEqual(plain_text, self.PLAIN_TEXT)
 
 
-class ActualCipherTestCase(unittest.TestCase):
+class ActualDecryptTestCase(unittest.TestCase):
     """This example taken from Dirk Rijmenants' simulator manual."""
 
     def setUp(self):
@@ -63,14 +63,25 @@ class ActualCipherTestCase(unittest.TestCase):
                 ring_settings=ring_settings,
                 plugboard_settings='AV BS CG DL FU HZ IN KM OW RX')
 
-    def test_decrypt(self):
+    def decrypt(self, start, enc_key, ciphertext, truth_data):
 
-        # retrieve the message key
-        self.machine.set_display('WXC')
-        msg_key = self.machine.process_text('KCH')
+        # remove spaces & Kenngruppen from the ciphertext
+        ciphertext = ciphertext.replace(' ', '')[5:]
 
-        # set the message key
+        # remove spaces from the truth data
+        truth_data = truth_data.replace(' ', '')
+
+        # decrypt the message key
+        self.machine.set_display(start)
+        msg_key = self.machine.process_text(enc_key)
+
+        # decrypt the cipher text with the unencrypted message key
         self.machine.set_display(msg_key)
+        plaintext = self.machine.process_text(ciphertext)
+
+        self.assertEqual(plaintext, truth_data)
+
+    def test_decrypt_part1(self):
 
         ciphertext = (
             'RFUGZ EDPUD NRGYS ZRCXN'
@@ -81,11 +92,43 @@ class ActualCipherTestCase(unittest.TestCase):
             'UBSTS LRNBZ SZWNR FXWFY'
             'SSXJZ VIJHI DISHP RKLKA'
             'YUPAD TXQSP INQMA TLPIF'
-            'SVKDA SCTAC DPBOP VHJK')
+            'SVKDA SCTAC DPBOP VHJK'
+        )
 
-        # remove spaces and the Kenngruppen
-        ciphertext = ciphertext.replace(' ', '')[5:]
-        plaintext = self.machine.process_text(ciphertext)
+        truth_data = (
+            'AUFKL XABTE ILUNG XVONX' 
+            'KURTI NOWAX KURTI NOWAX'
+            'NORDW ESTLX SEBEZ XSEBE'
+            'ZXUAF FLIEG ERSTR ASZER'
+            'IQTUN GXDUB ROWKI XDUBR'
+            'OWKIX OPOTS CHKAX OPOTS'
+            'CHKAX UMXEI NSAQT DREIN'
+            'ULLXU HRANG ETRET ENXAN'
+            'GRIFF XINFX RGTX'
+        )
 
-        print("'{}'\n\n'{}'\n\n'{}'\n\n".format(msg_key, ciphertext[:11],
-            plaintext[:11]))
+        self.decrypt('WXC', 'KCH', ciphertext, truth_data)
+
+    def test_decrypt_part2(self):
+
+        ciphertext = (
+            'FNJAU SFBWD NJUSE GQOBH'
+            'KRTAR EEZMW KPPRB XOHDR'
+            'OEQGB BGTQV PGVKB VVGBI'
+            'MHUSZ YDAJQ IROAX SSSNR'
+            'EHYGG RPISE ZBOVM QIEMM'
+            'ZCYSG QDGRE RVBIL EKXYQ'
+            'IRGIR QNRDN VRXCY YTNJR'
+        )
+
+        truth_data = (
+            'DREIG EHTLA NGSAM ABERS' 
+            'IQERV ORWAE RTSXE INSSI' 
+            'EBENN ULLSE QSXUH RXROE' 
+            'MXEIN SXINF RGTXD REIXA' 
+            'UFFLI EGERS TRASZ EMITA' 
+            'NFANG XEINS SEQSX KMXKM' 
+            'XOSTW XKAME NECXK'
+        )
+
+        self.decrypt('CRS', 'YPJ', ciphertext, truth_data)
