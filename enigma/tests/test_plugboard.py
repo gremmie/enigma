@@ -45,9 +45,11 @@ class PlugboardTestCase(unittest.TestCase):
         self.assertRaises(PlugboardError, Plugboard.from_key_sheet,
                 '1*/26 17/4 21/6 3/16 19/14 22/3 8/1 12/25')
         self.assertRaises(PlugboardError, Plugboard.from_key_sheet,
-                '1*/26 17/4 2A/6 3/16 19/14 22/3 8/1 12/25')
+                '18/26 17/4 2A/6 3/16 19/14 22/3 8/1 12/25')
         self.assertRaises(PlugboardError, Plugboard.from_key_sheet,
                 '100/2')
+        self.assertRaises(PlugboardError, Plugboard.from_key_sheet,
+                '100')
         self.assertRaises(PlugboardError, Plugboard.from_key_sheet,
                 settings='T/C')
 
