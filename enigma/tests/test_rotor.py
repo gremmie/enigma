@@ -10,6 +10,8 @@ import string
 
 from ..rotors.rotor import Rotor, ALPHA_LABELS
 from ..rotors import RotorError
+from ..rotors.data import ROTORS
+from ..rotors.factory import create_rotor
 
 
 WIRING = 'EKMFLGDQVZNTOWYHXUSPAIBRCJ'
@@ -75,3 +77,35 @@ class SimpleRotorTestCase(unittest.TestCase):
 
                     output = rotor.signal_out(expected)
                     self.assertEqual(output, i)
+
+    def test_notches(self):
+        """For every rotor we simulate, ensure that the notch setting is correct
+        regardless of the ring setting.
+
+        """
+        rotor_names = ROTORS.keys()
+        for rotor_name in rotor_names:
+            notches = ROTORS[rotor_name]['stepping']
+            if notches is None:
+                continue
+            for r in range(26):
+                rotor = create_rotor(rotor_name, r)
+                rotor.set_display('A')
+
+                for n in range(26):
+                    over_notch = rotor.get_display() in notches
+                    self.assertEqual(rotor.notch_over_pawl(), over_notch)
+                    rotor.rotate()
+
+    def test_rotate(self):
+
+        for r in range(26):
+            rotor1 = Rotor('X', WIRING, ring_setting=r)
+            rotor2 = Rotor('Y', WIRING, ring_setting=r)
+
+            rotor2.set_display('A')
+
+            for i, d in enumerate(ALPHA_LABELS):
+                rotor1.set_display(d)
+                self.assertEqual(rotor1.get_display(), rotor2.get_display())
+                rotor2.rotate()

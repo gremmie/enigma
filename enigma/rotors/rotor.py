@@ -125,21 +125,26 @@ class Rotor:
         for i, v in enumerate(self.entry_map):
             self.exit_map[v] = i
 
-        # configure ring labels
-        self.ring_labels = ALPHA_LABELS
+        # build a map of display values to positions
+        self.display_map = {}
+        for n in range(26):
+            self.display_map[chr(ord('A') + n)] = (n - self.ring_setting) % 26
 
-        # for mapping window display values to indices
-        self.display_map = dict(zip(self.ring_labels, range(26)))
+        # build a reverse map of position mapped to display values
+        self.pos_map = {v : k for k, v in self.display_map.items()}
 
-        # build step list: this is a list of positions where our notches are in
+        # build step set; this is a set of positions where our notches are in
         # place to allow the pawls to move
         self.step_set = set()
         if stepping is not None:
             for pos in stepping:
                 if pos in self.display_map:
-                    self.step_set.add(self.display_map[pos])
+                    self.step_set.add(pos)
                 else:
                     raise RotorError("stepping: %s" % pos)
+
+        # initialize our position and display value:
+        self.set_display('A')
 
     def set_display(self, val):
         """Spin the rotor such that the string val appears in the operator
@@ -158,18 +163,15 @@ class Rotor:
         """
         s = val.upper()
         if s not in self.display_map:
-            raise RotorError("bad display value %s" % s)
+            raise RotorError("bad display value %s" % val)
 
-        index = self.display_map[s]
-
-        self.pos = (index - self.ring_setting) % 26
+        self.pos = self.display_map[s]
+        self.display_val = s
         self.rotations = 0
 
     def get_display(self):
         """Returns what is currently being displayed in the operator window."""
-
-        index = (self.pos + self.ring_setting) % 26
-        return self.ring_labels[index]
+        return self.display_val
 
     def signal_in(self, n):
         """Simulate a signal entering the rotor from the right at a given pin
@@ -212,10 +214,11 @@ class Rotor:
         False otherwise.
 
         """
-        return self.pos in self.step_set
+        return self.display_val in self.step_set
 
     def rotate(self):
         """Rotate the rotor forward due to mechanical stepping action."""
 
         self.pos = (self.pos + 1) % 26
+        self.display_val = self.pos_map[self.pos]
         self.rotations += 1
