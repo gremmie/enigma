@@ -108,9 +108,8 @@ class EnigmaMachine:
         if len(val) != 3:
             raise EnigmaError("Bad display value")
 
-        start = 0 if self.rotor_count == 3 else 1
-        for i, r in enumerate(range(start, self.rotor_count)):
-            self.rotors[r].set_display(val[i])
+        for i, rotor in enumerate(reversed(self.rotors)):
+            rotor.set_display(val[2 - i])
 
     def get_display(self):
         """Returns the operator display as a string."""

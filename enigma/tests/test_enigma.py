@@ -48,3 +48,44 @@ class SimpleCipherTestCase(unittest.TestCase):
 
         plain_text = self.machine.process_text(self.CIPHER_TEXT)
         self.assertEqual(plain_text, self.PLAIN_TEXT)
+
+
+class ActualCipherTestCase(unittest.TestCase):
+    """This example taken from Dirk Rijmenants' simulator manual."""
+
+    def setUp(self):
+
+        ring_settings = [ord(c) - ord('A') for c in 'BUL']
+
+        self.machine = EnigmaMachine.from_key_sheet(
+                rotors='II IV V',
+                reflector='B',
+                ring_settings=ring_settings,
+                plugboard_settings='AV BS CG DL FU HZ IN KM OW RX')
+
+    def test_decrypt(self):
+
+        # retrieve the message key
+        self.machine.set_display('WXC')
+        msg_key = self.machine.process_text('KCH')
+
+        # set the message key
+        self.machine.set_display(msg_key)
+
+        ciphertext = (
+            'RFUGZ EDPUD NRGYS ZRCXN'
+            'UYTPO MRMBO FKTBZ REZKM'
+            'LXLVE FGUEY SIOZV EQMIK'
+            'UBPMM YLKLT TDEIS MDICA'
+            'GYKUA CTCDO MOHWX MUUIA'
+            'UBSTS LRNBZ SZWNR FXWFY'
+            'SSXJZ VIJHI DISHP RKLKA'
+            'YUPAD TXQSP INQMA TLPIF'
+            'SVKDA SCTAC DPBOP VHJK')
+
+        # remove spaces and the Kenngruppen
+        ciphertext = ciphertext.replace(' ', '')[5:]
+        plaintext = self.machine.process_text(ciphertext)
+
+        print("'{}'\n\n'{}'\n\n'{}'\n\n".format(msg_key, ciphertext[:11],
+            plaintext[:11]))

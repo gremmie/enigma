@@ -92,3 +92,21 @@ class PlugboardTestCase(unittest.TestCase):
                         self.assertEqual(p.signal(n), n - 1)
                 else:
                     self.assertEqual(n, p.signal(n))
+
+    def test_wiring2(self):
+    
+        stecker='AV BS CG DL FU HZ IN KM OW RX'
+
+        wiring = {}
+        pairs = stecker.split()
+        for p in pairs:
+            m, n = ord(p[0]) - ord('A'), ord(p[1]) - ord('A')
+            wiring[m] = n
+            wiring[n] = m
+
+        p = Plugboard.from_key_sheet(stecker)
+        for n in range(26):
+            if n in wiring:
+                self.assertEqual(p.signal(n), wiring[n])
+            else:
+                self.assertEqual(p.signal(n), n)
