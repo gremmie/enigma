@@ -2,14 +2,17 @@
 # This file is part of Py-Enigma, the Enigma Machine simulation.
 # Py-Enigma is released under the MIT License (see License.txt).
 
-"""Contains the Plugboard class for simulating the plugboard component."""
+"""Contains the Plugboard class for simulating the plugboard (Steckerbrett)
+component of the Enigma Machine.
+
+"""
 
 import collections
 from itertools import chain
 import string
 
 
-# On Wehrmacht models, the plugs are labeled with upper case letters
+# On Heer & Luftwaffe (?) models, the plugs are labeled with upper case letters
 WEHRMACHT_LABELS = string.ascii_uppercase
 
 # The number of plugboard cables supplied with a machine:
@@ -23,9 +26,9 @@ class PlugboardError(Exception):
 class Plugboard:
     """The plugboard allows the operator to swap letters before and after the 
     entry wheel. This is accomplished by connecting cables between pairs of
-    plugs that are marked with letters (Wehrmacht) or numbers (Kriegsmarine).
-    Ten cables were issued with each machine; thus up to 10 of these swappings
-    could be used as part of a machine setup.
+    plugs that are marked with letters (Heer & Luftwaffe models) or numbers
+    (Kriegsmarine). Ten cables were issued with each machine; thus up to 10 of
+    these swappings could be used as part of a machine setup.
 
     Each cable swaps both the input and output signals. Thus if A is connected
     to B, A crosses to B in the keyboard to entry wheel direction and also in
@@ -37,7 +40,7 @@ class Plugboard:
         pairs, or None.
 
         A value of None or an empty list/tuple indicates no plugboard
-        connections are to be used (a straight mapping).
+        connections are to be used (i.e. a straight mapping).
 
         Otherwise wiring_pairs must be an iterable of integer pairs, where each
         integer is between 0-25, inclusive. At most 10 such pairs can be
@@ -80,9 +83,9 @@ class Plugboard:
         """Configure the plugboard according to a settings string as you may
         find on a key sheet.
 
-        Two syntaxes are supported, the Wehrmacht and Kriegsmarine styles:
+        Two syntaxes are supported, the Heer/Luftwaffe and Kriegsmarine styles:
 
-        In the Wehrmacht syntax, the settings are given as a string of
+        In the Heer syntax, the settings are given as a string of
         alphabetic pairs. For example: 'PO ML IU KJ NH YT GB VF RE DC' 
 
         In the Kriegsmarine syntax, the settings are given as a string of number
@@ -115,7 +118,7 @@ class Plugboard:
 
                 wiring_pairs.append((m - 1, n - 1))
         else:
-            # Wehrmacht syntax
+            # Heer/Luftwaffe syntax
             pairs = settings.upper().split()
 
             for p in pairs:

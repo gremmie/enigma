@@ -11,12 +11,12 @@ we simulate.
 # website: "Techical Details of the Engigma Machine"
 # http://users.telenet.be/d.rijmenants/en/enigmatech.htm
 #
-# Rotors I-V were used by the Wehrmacht, Luftwaffe, and Kriegsmarine. The
+# Rotors I-V were used by the Heer, Luftwaffe, and Kriegsmarine. The
 # Kriegsmarine added rotors VI-VIII to the M3 model, and added Beta & Gamma to
 # the M4 model (used with thin reflectors only). Note that Beta & Gamma rotors
 # did not rotate.
 #
-# The Wehrmacht, Luftwaffe, & Kriegsmarine M3 machines used reflectors B & C,
+# The Heer, Luftwaffe, & Kriegsmarine M3 machines used reflectors B & C,
 # while the Kriegsmarine M4 used thin reflectors B & C.
 #
 
