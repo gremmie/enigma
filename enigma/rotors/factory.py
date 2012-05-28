@@ -9,13 +9,12 @@ from .rotor import Rotor
 from .data import ROTORS, REFLECTORS
 
 
-def create_rotor(model, ring_setting=0, alpha_labels=True):
+def create_rotor(model, ring_setting=0):
     """Factory function to create and return a rotor of the given model name."""
 
     if model in ROTORS:
         data = ROTORS[model]
-        return Rotor(model, data['wiring'], ring_setting, data['stepping'],
-                alpha_labels)
+        return Rotor(model, data['wiring'], ring_setting, data['stepping'])
 
     raise RotorError("Unknown rotor type: %s" % model)
 

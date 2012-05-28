@@ -31,7 +31,7 @@ class EnigmaMachine:
         the left-most rotor, and the last rotor is the right-most (from the
         operator's perspective sitting at the machine).
 
-        reflector - a rotor object to represent the reflector
+        reflector - a rotor object to represent the reflector (UKW)
 
         plugboard - a plugboard object to represent the state of the plugboard
 

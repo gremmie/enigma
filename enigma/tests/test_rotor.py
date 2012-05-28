@@ -8,7 +8,7 @@ import unittest
 import collections
 import string
 
-from ..rotors.rotor import Rotor, ALPHA_LABELS, NUMERIC_LABELS
+from ..rotors.rotor import Rotor, ALPHA_LABELS
 from ..rotors import RotorError
 
 
@@ -39,31 +39,17 @@ class SimpleRotorTestCase(unittest.TestCase):
 
     def test_bad_stepping(self):
 
-        for alpha in True, False:
-            self.assertRaises(RotorError, Rotor, 'I', WIRING,
-                    alpha_labels=alpha, stepping="0")
-            self.assertRaises(RotorError, Rotor, 'I', WIRING,
-                    alpha_labels=alpha, stepping="A0")
-            self.assertRaises(RotorError, Rotor, 'I', WIRING,
-                    alpha_labels=alpha, stepping=[1])
-            self.assertRaises(RotorError, Rotor, 'I', WIRING,
-                    alpha_labels=alpha, stepping=['A', '%', '14'])
-            self.assertRaises(RotorError, Rotor, 'I', WIRING,
-                    alpha_labels=alpha, stepping=('A', '%', '14'))
+        self.assertRaises(RotorError, Rotor, 'I', WIRING, stepping="0")
+        self.assertRaises(RotorError, Rotor, 'I', WIRING, stepping="A0")
+        self.assertRaises(RotorError, Rotor, 'I', WIRING, stepping=[1])
+        self.assertRaises(RotorError, Rotor, 'I', WIRING, stepping=['A', '%', '14'])
+        self.assertRaises(RotorError, Rotor, 'I', WIRING, stepping=('A', '%', '14'))
     
-    def test_alpha_display(self):
+    def test_display(self):
 
         for r in range(26):
-            rotor = Rotor('I', WIRING, ring_setting=r, alpha_labels=True)
+            rotor = Rotor('I', WIRING, ring_setting=r)
             for s in ALPHA_LABELS:
-                rotor.set_display(s)
-                self.assertEqual(s, rotor.get_display())
-
-    def test_numeric_display(self):
-
-        for r in range(26):
-            rotor = Rotor('I', WIRING, ring_setting=r, alpha_labels=False)
-            for s in NUMERIC_LABELS:
                 rotor.set_display(s)
                 self.assertEqual(s, rotor.get_display())
 
@@ -73,7 +59,7 @@ class SimpleRotorTestCase(unittest.TestCase):
         
         """
         for r in range(26):
-            rotor = Rotor('I', WIRING, ring_setting=r, alpha_labels=True)
+            rotor = Rotor('I', WIRING, ring_setting=r)
 
             for n, d in enumerate(ALPHA_LABELS):
                 rotor.set_display(d)

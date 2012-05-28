@@ -11,11 +11,10 @@ from . import RotorError
 
 
 ALPHA_LABELS = string.ascii_uppercase
-NUMERIC_LABELS = ['{:02d}'.format(n) for n in range(1, 27)]
 
 # In specifying a wiring for a rotor, every letter must be included exactly
 # once. This variable helps us enforce that:
-WIRING_FREQ_SET = set((letter, 1) for letter in string.ascii_uppercase)
+WIRING_FREQ_SET = set((letter, 1) for letter in ALPHA_LABELS)
 
 
 class Rotor:
@@ -36,12 +35,12 @@ class Rotor:
     mapped to pin 0 on an alphabetic ring). A ring setting of 1 means the letter
     "B" is mapped to pin 0.
 
-    Each rotor can be in one of 26 positions on the axle, with position 0 where
-    pin/contact 0 is being indicated in the operator window. The rotor rotates
-    towards the operator by mechanical means during normal operation as keys are
-    being pressed during data entry. Position 1 is thus defined to be one step
-    from position 0. Likewise, position 25 is the last position before another
-    step returns it to position 0, completing 1 trip around the axle.
+    Each rotor can be in one of 26 positions on the spindle, with position 0
+    where pin/contact 0 is being indicated in the operator window. The rotor
+    rotates towards the operator by mechanical means during normal operation as
+    keys are being pressed during data entry. Position 1 is thus defined to be
+    one step from position 0. Likewise, position 25 is the last position before
+    another step returns it to position 0, completing 1 trip around the spindle.
 
     Finally, a rotor has a "stepping" or "turnover" parameter. Physically this
     is implemented by putting a notch on the alphabet ring and it controls when
@@ -60,8 +59,7 @@ class Rotor:
     
     """
 
-    def __init__(self, model_name, wiring, ring_setting=0, stepping=None,
-            alpha_labels=True):
+    def __init__(self, model_name, wiring, ring_setting=0, stepping=None):
         """Establish rotor characteristics:
 
         model_name - e.g. "I", "II", "III", "Beta", "Gamma"
@@ -69,8 +67,8 @@ class Rotor:
         wiring - this should be a string of 26 alphabetic characters that
         represents the internal wiring transformation of the signal as it enters
         from the right side. This is the format used in various online
-        resources. For example, for the Wehrmacht & Luftwaffe Enigma type I
-        rotor the mapping is "EKMFLGDQVZNTOWYHXUSPAIBRCJ".
+        resources. For example, for the Wehrmacht Enigma type I rotor the
+        mapping is "EKMFLGDQVZNTOWYHXUSPAIBRCJ".
 
         ring_setting - this should be an integer from 0-25, inclusive, which
         indicates the Ringstellung. A value of 0 means there is no offset; e.g.
@@ -85,17 +83,19 @@ class Rotor:
         be used, e.g. "ZM".  Another way to think of this parameter is that when
         a character in the stepping string is visible in the operator window, a
         notch is lined up with the pawl on the left side of the rotor.  This
-        will allow the pawl to push up on the rotor to the left when the next
-        key is depressed.
+        will allow the pawl to push up on the rotor *and* the rotor to the left
+        when the next key is depressed.
 
-        alpha_labels - when True, the letters A-Z are used for the rotor ring
-        labels. If False, numeric string labels (01-26) are used.
+        Note that for purposes of simulation, our rotors will always use
+        alphabetic labels A-Z. In reality, the Heer & Luftwaffe devices used
+        numbers 01-26, and Kriegsmarine devices used A-Z. Our usage of A-Z is
+        simply for simulation convenience. In the future we may allow either
+        display.
 
         """
         self.name = model_name
         self.wiring_str = wiring.upper()
         self.ring_setting = ring_setting
-        self.alpha_labels = alpha_labels
         self.pos = 0
         self.rotations = 0
 
@@ -105,7 +105,7 @@ class Rotor:
 
         # check wiring format; must contain A-Z
         for c in self.wiring_str:
-            if c not in string.ascii_uppercase:
+            if c not in ALPHA_LABELS:
                 raise RotorError("invalid wiring: %s" % wiring)
 
         # check wiring format; ensure every letter appears exactly once
@@ -126,7 +126,7 @@ class Rotor:
             self.exit_map[v] = i
 
         # configure ring labels
-        self.ring_labels = ALPHA_LABELS if alpha_labels else NUMERIC_LABELS
+        self.ring_labels = ALPHA_LABELS
 
         # for mapping window display values to indices
         self.display_map = dict(zip(self.ring_labels, range(26)))
@@ -149,13 +149,9 @@ class Rotor:
         rotates the pins and contacts accordingly.
 
         A value of 'A' for example puts the rotor in position 0, assuming an
-        internal ring setting of 0 and alphabetic labels.
+        internal ring setting of 0.
 
-        If the rotor is using alphabetic ring labels, val must be a string in
-        'A' - 'Z'.
-
-        If the rotor is not using alphabetic ring labels, val must be a string
-        of the form '01' - '26'.
+        The parameter val must be a string in 'A' - 'Z'.
 
         Setting the display resets the internal rotation counter to 0.
 
