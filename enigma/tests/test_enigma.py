@@ -59,12 +59,10 @@ class ActualDecryptTestCase(unittest.TestCase):
     """
     def setUp(self):
 
-        ring_settings = [ord(c) - ord('A') for c in 'BUL']
-
         self.machine = EnigmaMachine.from_key_sheet(
                 rotors='II IV V',
                 reflector='B',
-                ring_settings=ring_settings,
+                ring_settings='B U L',
                 plugboard_settings='AV BS CG DL FU HZ IN KM OW RX')
 
     def decrypt(self, start, enc_key, ciphertext, truth_data):
@@ -147,12 +145,11 @@ class KriegsmarineTestCase(unittest.TestCase):
     """
     def test_decrypt(self):
 
-        ring_settings = [ord(c) - ord('A') for c in 'AAAV']
         stecker ='1/20 2/12 4/6 7/10 8/13 14/23 15/16 17/25 18/26 22/24'
 
         machine = EnigmaMachine.from_key_sheet(
                     rotors='Beta II IV I',
-                    ring_settings=ring_settings,
+                    ring_settings='A A A V',
                     reflector='B-Thin',
                     plugboard_settings=stecker)
 
