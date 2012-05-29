@@ -35,7 +35,7 @@ Examples:
   
 """
 
-def create_from_key_sheet(filename, day=None):
+def create_from_key_file(filename, day=None):
     """Create an EnigmaMachine from a daily key sheet."""
 
     with open(filename, 'r') as f:
@@ -67,8 +67,8 @@ def main():
     parser = argparse.ArgumentParser(description=PROG_DESC, epilog=HELP_EPILOG,
             formatter_class=argparse.RawDescriptionHelpFormatter)
     
-    parser.add_argument('-k', '--key-sheet',
-            help='path to key sheet for daily settings')
+    parser.add_argument('-k', '--key-file',
+            help='path to key file for daily settings')
     parser.add_argument('-d', '--day', type=int, default=None,
             help='use the settings for day DAY when reading keysheet')
     parser.add_argument('-r', '--rotors', nargs='+', metavar='ROTOR',
@@ -92,7 +92,7 @@ def main():
 
     args = parser.parse_args()
 
-    if args.key_sheet and (args.rotors or args.ring_settings or args.plugboard
+    if args.key_file and (args.rotors or args.ring_settings or args.plugboard
             or args.reflector):
         parser.error("Please specify either a keysheet or command-line key "
                      "settings, but not both")
@@ -100,8 +100,8 @@ def main():
     if args.start is None:
         parser.error("Please specify a start position")
 
-    if args.key_sheet:
-        machine = create_from_key_sheet(args.key_sheet, args.day)
+    if args.key_file:
+        machine = create_from_key_file(args.key_file, args.day)
     else:
         machine = create_from_args(parser, args)
 
