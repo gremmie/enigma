@@ -51,8 +51,12 @@ class SimpleCipherTestCase(unittest.TestCase):
 
 
 class ActualDecryptTestCase(unittest.TestCase):
-    """This example taken from Dirk Rijmenants' simulator manual."""
-
+    """This example taken from Dirk Rijmenants' simulator manual.
+    
+    It is credited to Frode Weierud and Geoff Sullivan.
+        http://cryptocellar.com
+    
+    """
     def setUp(self):
 
         ring_settings = [ord(c) - ord('A') for c in 'BUL']
@@ -132,3 +136,57 @@ class ActualDecryptTestCase(unittest.TestCase):
         )
 
         self.decrypt('CRS', 'YPJ', ciphertext, truth_data)
+
+
+class KriegsmarineTestCase(unittest.TestCase):
+    """This is the Kriegsmarine example from Dirk Rijmenants' simulator manual.
+
+    It is credited to Stefan Krah and the M4 project:
+        http://www.bytereef.org/m4_project.html
+
+    """
+    def test_decrypt(self):
+
+        ring_settings = [ord(c) - ord('A') for c in 'AAAV']
+        stecker ='1/20 2/12 4/6 7/10 8/13 14/23 15/16 17/25 18/26 22/24'
+
+        machine = EnigmaMachine.from_key_sheet(
+                    rotors='Beta II IV I',
+                    ring_settings=ring_settings,
+                    reflector='B-Thin',
+                    plugboard_settings=stecker)
+
+        ciphertext = (
+        'FCLC QRKN NCZW VUSX PNYM INHZ XMQX SFWX WLKJ AHSH NMCO CCAK UQPM KCSM'
+        'HKSE INJU SBLK IOSX CKUB HMLL XCSJ USRR DVKO HULX WCCB GVLI YXEO AHXR'
+        'HKKF VDRE WEZL XOBA FGYU JQUK GRTV UKAM EURB VEKS UHHV OYHA BCJW MAKL'
+        'FKLM YFVN RIZR VVRT KOFD ANJM OLBG FFLE OPRG TFLV RHOW OPBE KVWM UQFM'
+        'PWPA RMFH AGKX IIBG FCLC QRKM VA'
+        ).replace(' ', '')
+
+        # remove the message indicators from the message (the first and last 2
+        # groups of the message -- it appears the last partial group 'VA' should
+        # be removed also)
+
+        ciphertext = ciphertext[8:]
+        ciphertext = ciphertext[:-10]
+
+        machine.set_display('VJNA')
+        plaintext = machine.process_text(ciphertext)
+
+        truth_data = (
+            'VONV ONJL OOKS JHFF TTTE'
+            'INSE INSD REIZ WOYY QNNS'
+            'NEUN INHA LTXX BEIA NGRI'
+            'FFUN TERW ASSE RGED RUEC'
+            'KTYW ABOS XLET ZTER GEGN'
+            'ERST ANDN ULAC HTDR EINU'
+            'LUHR MARQ UANT ONJO TANE'
+            'UNAC HTSE YHSD REIY ZWOZ'
+            'WONU LGRA DYAC HTSM YSTO'
+            'SSEN ACHX EKNS VIER MBFA'
+            'ELLT YNNN NNNO OOVI ERYS'
+            'ICHT EINS NULL'
+        ).replace(' ', '')
+
+        self.assertEqual(plaintext, truth_data)

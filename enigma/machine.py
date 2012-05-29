@@ -105,11 +105,11 @@ class EnigmaMachine:
         window from left to right.
 
         """
-        if len(val) != 3:
-            raise EnigmaError("Bad display value")
+        if len(val) != self.rotor_count:
+            raise EnigmaError("Incorrect length for display value")
 
         for i, rotor in enumerate(reversed(self.rotors)):
-            rotor.set_display(val[2 - i])
+            rotor.set_display(val[-1 - i])
 
     def get_display(self):
         """Returns the operator display as a string."""
