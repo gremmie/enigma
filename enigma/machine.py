@@ -10,6 +10,7 @@ import string
 
 from .rotors.factory import create_rotor, create_reflector
 from .plugboard import Plugboard
+from .keyfile import get_daily_settings
 
 
 class EnigmaError(Exception):
@@ -18,6 +19,7 @@ class EnigmaError(Exception):
 # The Enigma keyboard consists of the 26 letters of the alphabet, uppercase
 # only:
 KEYBOARD_CHARS = string.ascii_uppercase
+KEYBOARD_SET = set(KEYBOARD_CHARS)
 
 
 class EnigmaMachine:
@@ -111,6 +113,20 @@ class EnigmaMachine:
                    create_reflector(reflector),
                    Plugboard.from_key_sheet(plugboard_settings))
 
+    @classmethod
+    def from_key_file(cls, fp, day=None):
+        """Convenience function to read key parameters from a file.
+
+        fp - a file-like object that contains daily key settings
+        day - the line labeled with the day number (1-31) will be used for the
+        settings. If day is None, the day number will be determined from today's
+        date. 
+
+        For more information on the file format, see keyfile.py.
+
+        """
+        args = get_daily_settings(fp, day)
+        return cls.from_key_sheet(**args)
 
     def set_display(self, val):
         """Sets the rotor operator windows to 'val'.
@@ -143,7 +159,7 @@ class EnigmaMachine:
         The lamp that is lit by this key press is returned as a string.
 
         """
-        if key not in KEYBOARD_CHARS:
+        if key not in KEYBOARD_SET:
             raise EnigmaError('illegal key press %s' % key)
 
         # simulate the mechanical action of the machine
@@ -207,15 +223,28 @@ class EnigmaMachine:
 
         return self.plugboard.signal(pos)
 
-    def process_text(self, text):
+    def process_text(self, text, replace_char='X'):
         """Run the text through the machine, simulating a key press for each
         letter in the text.
 
+        text - the text to process. Note that the text is converted to upper
+        case before processing.
+
+        replace_char - if text contains a character not on the keyboard, replace
+        it with replace_char; if replace_char is None the character is dropped
+        from the message
+
         """
-        # TODO: if there is a character not on the keyboard, perform a
-        # substitution or skip it.
         result = []
         for key in text:
-            result.append(self.key_press(key))
+            c = key.upper()
+
+            if c not in KEYBOARD_SET: 
+                if replace_char:
+                    c = replace_char
+                else:
+                    continue    # ignore it
+
+            result.append(self.key_press(c))
 
         return ''.join(result)
