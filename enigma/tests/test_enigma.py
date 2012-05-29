@@ -168,8 +168,7 @@ class KriegsmarineTestCase(unittest.TestCase):
         # groups of the message -- it appears the last partial group 'VA' should
         # be removed also)
 
-        ciphertext = ciphertext[8:]
-        ciphertext = ciphertext[:-10]
+        ciphertext = ciphertext[8:-10]
 
         machine.set_display('VJNA')
         plaintext = machine.process_text(ciphertext)
