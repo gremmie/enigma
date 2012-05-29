@@ -61,9 +61,13 @@ class EnigmaMachine:
         or a single string:
             e.g. ["I", "III", "IV"] or "I III IV"
 
-        ring_settings: an iterable of integers or None representing the ring
-        settings to be applied to the rotors in the rotors list. None means all
-        ring settings are 0.
+        ring_settings: either a list/tuple of integers, a string, or None to
+        represent the ring settings to be applied to the rotors in the rotors
+        list. The acceptable values are:
+            - A list/tuple of integers with values between 0-25
+            - A string; either space separated letters or numbers, e.g. 'B U L'
+              or '1 20 11'
+            - None means all ring settings are 0.
 
         reflector: a string that names the reflector to use
 
@@ -86,6 +90,16 @@ class EnigmaMachine:
 
         if ring_settings is None:
             ring_settings = [0] * num_rotors
+        elif isinstance(ring_settings, str):
+            strings = ring_settings.split()
+            ring_settings = []
+            for s in strings:
+                if s.isalpha():
+                    ring_settings.append(ord(s.upper()) - ord('A'))
+                elif s.isdigit():
+                    ring_settings.append(int(s))
+                else:
+                    raise EnigmaError('invalid ring setting: %s' % s)
 
         if num_rotors != len(ring_settings):
             raise EnigmaError("# of rotors doesn't match # of ring settings")
