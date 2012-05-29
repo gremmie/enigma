@@ -74,6 +74,17 @@ This program prints::
 
    THEXRUSSIANSXAREXCOMINGX
 
+Py-Enigma also includes a command-line application for processing messages.
+Assuming you have a proper key file that contains the same initial settings as
+the code above, the above example can be performed on the command-line::
+
+   $ pyenigma --key-file=keys.txt --start=WXC --text='KCH'
+   BLA
+   $ pyenigma --key-file=keys.txt --start=BLA --text='NIBLFMYMLLUFWCASCSSNVHAZ'
+   THEXRUSSIANSXAREXCOMINGX
+
+The format of the key file can be found in the documentation.
+
 
 Requirements
 ------------
