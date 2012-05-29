@@ -44,7 +44,7 @@ Quick Example
 -------------
 
 This example shows how the library can be used to decode a message using the
-procedure employed the German army::
+procedure employed by the German army::
    
    from enigma.machine import EnigmaMachine
 
