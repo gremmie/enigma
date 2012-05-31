@@ -29,9 +29,9 @@ Text to process can be supplied 3 ways:
 
 Examples:
 
-    $ %(prog)s --key-file=enigma.keys -t HELLOXWORLDX
-    $ %(prog)s -r III IV V -s 0 1 2 -p AB CD EF GH IJ KL MN -u B
-    $ %(prog)s -r Beta III IV V -s A B C D -p 1/2 3/4 5/6 -u B-Thin
+    $ %(prog)s --key-file=enigma.keys -s XYZ -t HELLOXWORLDX
+    $ %(prog)s -r III IV V -i 0 1 2 -p AB CD EF GH IJ KL MN -u B -s XYZ
+    $ %(prog)s -r Beta III IV V -i A B C D -p 1/2 3/4 5/6 -u B-Thin -s WXYZ
   
 """
 

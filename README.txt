@@ -5,8 +5,8 @@ A historically accurate Enigma Machine library written in Python 3
 ------------------------------------------------------------------
 
 :Author: Brian Neal <bgneal@gmail.com>
-:Version: 0.1
-:Date: May 28, 2012
+:Version: Alpha
+:Date: May 30, 2012
 :Home Page: https://bitbucket.org/bgneal/enigma/
 :License: MIT License (see LICENSE.txt)
 :Support: https://bitbucket.org/bgneal/enigma/issues
@@ -78,9 +78,9 @@ Py-Enigma also includes a command-line application for processing messages.
 Assuming you have a proper key file that contains the same initial settings as
 the code above, the above example can be performed on the command-line::
 
-   $ pyenigma --key-file=keys.txt --start=WXC --text='KCH'
+   $ pyenigma.py --key-file=keys.txt --start=WXC --text='KCH'
    BLA
-   $ pyenigma --key-file=keys.txt --start=BLA --text='NIBLFMYMLLUFWCASCSSNVHAZ'
+   $ pyenigma.py --key-file=keys.txt --start=BLA --text='NIBLFMYMLLUFWCASCSSNVHAZ'
    THEXRUSSIANSXAREXCOMINGX
 
 The format of the key file can be found in the documentation.
@@ -89,7 +89,7 @@ The format of the key file can be found in the documentation.
 Requirements
 ------------
 
-Py-Enigma is written in Python_, specifically Python 3. It has no other
+Py-Enigma is written in Python_, specifically Python 3.2. It has no other
 requirements or dependencies.
 
 
@@ -111,9 +111,9 @@ the following command::
 
    $ hg clone https://bitbucket.org/bgneal/enigma
 
-In the very near future I will provide a ``setup.py`` script that will allow you
-to install Py-Enigma. For the time being, just place the ``enigma`` directory on
-your ``PYTHONPATH``.
+Once you have obtained a copy of the source somehow, to install::
+
+   $ python setup.py install
 
 Documentation
 -------------
