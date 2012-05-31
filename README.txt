@@ -15,10 +15,10 @@ A historically accurate Enigma Machine library written in Python 3
 Overview
 --------
 
-**Py-Enigma** is a Python 3 library for simulating the `Enigma machines`_ used by
-the German armed forces (Wehrmacht) during World War 2. Py-Enigma makes it
-possible to both encrypt and decrypt messages that can be read by, or written
-to, actual Enigma machines used by the German army (Heer), air force
+**Py-Enigma** is a Python 3 library for simulating the `Enigma machines`_ used
+by the German armed forces (Wehrmacht) during World War 2. Py-Enigma makes it
+possible to both encrypt and decrypt messages that can be sent to, or received
+from, actual Enigma machines used by the German army (Heer), air force
 (Luftwaffe), and navy (Kriegsmarine).
 
 It is my hope that library will be useful to Enigma enthusiasts, historians, and
@@ -115,6 +115,7 @@ Once you have obtained a copy of the source somehow, to install::
 
    $ python setup.py install
 
+
 Documentation
 -------------
 
@@ -122,6 +123,7 @@ I want to use Py-Enigma as a chance to learn Sphinx_, so you can expect to see
 some nicely formatted documentation coming soon. In the meantime, please read
 the source code. I commented it heavily so I could understand how the Enigma
 machine works.
+
 
 Support
 -------
