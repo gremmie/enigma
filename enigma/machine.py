@@ -73,8 +73,8 @@ class EnigmaMachine:
 
         reflector: a string that names the reflector to use
 
-        plugboard: a string of plugboard settings as you might find on a key
-        sheet; e.g. 
+        plugboard_settings: a string of plugboard settings as you might find
+        on a key sheet; e.g. 
             'PO ML IU KJ NH YT GB VF RE DC' 
         or
             '18/26 17/4 21/6 3/16 19/14 22/7 8/1 12/25 5/9 10/15'
@@ -131,8 +131,8 @@ class EnigmaMachine:
     def set_display(self, val):
         """Sets the rotor operator windows to 'val'.
 
-        'val' must be a string or iterable containing 3 values, one for each
-        window from left to right.
+        'val' must be a string or iterable containing values for each window
+        from left to right.
 
         """
         if len(val) != self.rotor_count:

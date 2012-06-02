@@ -13,7 +13,12 @@ Welcome to Py-Enigma's documentation!
 :License: MIT License (see LICENSE.txt)
 :Support: https://bitbucket.org/bgneal/enigma/issues
 
-Contents:
+Py-Enigma is a historically accurate `Enigma machine
+<http://en.wikipedia.org/wiki/Enigma_machine>`_ simulation library written in
+Python. Py-Enigma includes a simple command-line application to allow for quick
+experimenting and scripting.
+
+Documentation contents:
 
 .. toctree::
    :maxdepth: 2
@@ -21,6 +26,7 @@ Contents:
    overview
    library
    pyenigma
+   keyfile
 
 Indices and tables
 ==================
