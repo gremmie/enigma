@@ -102,6 +102,21 @@ Some notes on the parameters:
    words, these values produce identical ring settings: ``[0, 5, 15]``,
    ``'A F P'``, and ``'1 6 16'``.
 
+The second shortcut function allows you to keep your key settings stored in an
+external file::
+
+   from enigma.machine import EnigmaMachine
+
+   with open('my_enigma_keys.txt', 'r') as f:
+      machine = EnigmaMachine.from_key_file(f, day=13)
+
+The class method :meth:`from_key_file
+<enigma.machine.EnigmaMachine.from_key_file>` builds an :class:`EnigmaMachine
+<enigma.machine.EnigmaMachine>` from settings stored in a simulated monthly key
+sheet file. The format of this file is explained in :doc:`keyfile`. The ``day``
+argument allows you to specify the day of the month (1-31). If this parameter is
+omitted or ``None``, the day value is obtained from the current date.
+
 
 Constructing by hand
 ~~~~~~~~~~~~~~~~~~~~
@@ -252,7 +267,7 @@ The operator then configures his machine::
           plugboard_settings='AV BS CG DL FU HZ IN KM OW RX')
 
 Suppose the Enigma operator was handed a message for transmit by an officer
-which reads "The Russians are coming!". The operator would first randomly decide
+which reads "The Russians are coming!" The operator would first randomly decide
 two things:
 
 * Initial rotor positions, say ``WXC``
