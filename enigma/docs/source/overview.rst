@@ -83,6 +83,8 @@ You may also clone the Mercurial_ source code repository::
    $ hg clone https://bitbucket.org/bgneal/enigma
 
 
+.. _references-label:
+
 Acknowledgements & References
 -----------------------------
 
