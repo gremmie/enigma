@@ -21,10 +21,11 @@ experimenting and scripting.
 Documentation contents:
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 3
 
    overview
-   library
+   guide
+   reference
    pyenigma
    keyfile
 
