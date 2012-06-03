@@ -68,7 +68,8 @@ class EnigmaMachine:
         list. The acceptable values are:
             - A list/tuple of integers with values between 0-25
             - A string; either space separated letters or numbers, e.g. 'B U L'
-              or '1 20 11'
+              or '2 21 12'. If numbers are used, they are 1-based to match
+              historical key sheet data.
             - None means all ring settings are 0.
 
         reflector: a string that names the reflector to use
@@ -99,7 +100,7 @@ class EnigmaMachine:
                 if s.isalpha():
                     ring_settings.append(ord(s.upper()) - ord('A'))
                 elif s.isdigit():
-                    ring_settings.append(int(s))
+                    ring_settings.append(int(s) - 1)
                 else:
                     raise EnigmaError('invalid ring setting: %s' % s)
 

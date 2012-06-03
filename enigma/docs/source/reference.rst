@@ -8,7 +8,9 @@ EnigmaMachines
 --------------
 
 The ``EnigmaMachine`` class represents an assembled Enigma machine that consists
-of rotors, a plugboard, a keyboard, and indicator lamps.
+of rotors, a plugboard, a keyboard, and indicator lamps. The keyboard and lamps
+act as input and outputs. The other components are represented by Python
+classes.
 
 
 EnigmaMachine class reference
@@ -55,7 +57,8 @@ The ``EnigmaMachine`` class resides in the ``enigma.machine`` module.
 
       * A list/tuple of integers with values between 0-25.
       * A string; either space separated letters or numbers, e.g.
-        ``'B U L'`` or ``'1 20 11'``.
+        ``'B U L'`` or ``'1 20 11'``. Note that if numbers are used, they
+        should be between 1-26 to match historical key sheet data.
       * ``None`` means all ring settings are 0.
 
       The ``plugboard_settings`` parameter can accept either:
@@ -347,6 +350,7 @@ The two factory functions are described next:
    :param string model: the model name to create; see the :ref:`rotor-table-label` table
    :param integer ring_setting: the ring setting (0-25) to use
    :returns: the newly created :class:`Rotor <enigma.rotors.rotor.Rotor>`
+   :raises RotorError: when an unknown model name is provided
 
 
 .. function:: enigma.rotors.factory.create_reflector(model)
@@ -357,6 +361,7 @@ The two factory functions are described next:
    :param string model: the model name to create; see the :ref:`reflector-table-label` table
    :returns: the newly created reflector, which is actually of type
       :class:`Rotor <enigma.rotors.rotor.Rotor>`
+   :raises RotorError: when an unknown model name is provided
 
 
 Rotor exceptions
@@ -367,3 +372,82 @@ Rotor exceptions
 if the rotor object is given an invalid parameter during a :meth:`set_display
 <enigma.rotors.rotor.Rotor.set_display>` operation.
 
+
+Plugboards
+----------
+
+The plugboard, or *Steckerbrett* in German, allows the operator to swap up to 10
+keys and indicator lamps for increased key strength.
+
+Plugboards have little use on their own. They are placed inside an :class:`EnigmaMachine
+<enigma.machine.EnigmaMachine>` object, which then calls the public ``Plugboard``
+methods.
+
+Plugboard class reference
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. class:: enigma.plugboard.Plugboard([wiring_pairs=None])
+
+   The plugboard allows the operator to swap letters before and after the entry
+   wheel. This is accomplished by connecting cables between pairs of plugs that
+   are marked with letters (Heer & Luftwaffe models) or numbers (Kriegsmarine).
+   Ten cables were issued with each machine; thus up to 10 of these swappings
+   could be used as part of a machine setup.
+
+   Each cable swaps both the input and output signals. Thus if A is connected
+   to B, A crosses to B in the keyboard to entry wheel direction and also in
+   the reverse entry wheel to lamp direction.
+
+   The constructor configures the plugboard according to a list or tuple of
+   integer pairs, or None.
+
+   :param wiring_pairs: A value of ``None`` or an empty list/tuple indicates no
+      plugboard connections are to be used (i.e. a straight mapping).  Otherwise
+      ``wiring_pairs`` must be an iterable of integer pairs, where each integer
+      is between 0-25, inclusive. At most 10 such pairs can be specified. Each
+      value represents an input/output path through the plugboard. It is invalid
+      to specify the same path more than once in the list.
+
+   :raises PlugboardError: If an invalid ``wiring_pairs`` parameter is given.
+
+   .. classmethod:: from_key_sheet([settings=None])
+
+      This is a convenience function to build a plugboard according to a 
+      settings string as you may find on a key sheet.
+
+      Two syntaxes are supported, the Heer/Luftwaffe and Kriegsmarine styles:
+
+      In the Heer syntax, the settings are given as a string of
+      alphabetic pairs. For example: ``'PO ML IU KJ NH YT GB VF RE DC'``.
+
+      In the Kriegsmarine syntax, the settings are given as a string of number
+      pairs, separated by a '/'. Note that the numbering uses 1-26, inclusive.
+      For example: ``'18/26 17/4 21/6 3/16 19/14 22/7 8/1 12/25 5/9 10/15'``.
+
+      To specify no plugboard connections, settings can be ``None`` or an empty
+      string.
+
+      :param settings: A settings string as described above, or ``None``.
+      :raises PlugboardError: If the settings string is invalid, or if
+         it contains more than 10 pairs. Each plug should be present at
+         most once in the settings string.
+
+   .. method:: signal(n)
+
+      Simulate a signal entering the plugboard on wire n, where n must be
+      an integer between 0 and 25.
+
+      :param integer n: The wire number the input signal is on (0-25).
+      :returns: The wire number of the output signal (0-25).
+      :rtype: integer
+
+      Note that since the plugboard always crosses pairs of wires, it doesn't
+      matter what direction (keyboard -> entry wheel or vice versa) the signal
+      is coming from.
+
+
+Plugboard exceptions
+~~~~~~~~~~~~~~~~~~~~
+
+:class:`Plugboard <enigma.plugboard.Plugboard>` objects may raise
+``enigma.plugboard.PlugboardError`` when an invalid constructor argument is given.
