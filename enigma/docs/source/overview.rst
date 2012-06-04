@@ -50,7 +50,7 @@ the code above, the above example can be performed on the command-line::
    $ pyenigma.py --key-file=keys.txt --start=BLA --text='NIBLFMYMLLUFWCASCSSNVHAZ'
    THEXRUSSIANSXAREXCOMINGX
 
-The format of the key file can be found in the documentation for pyenigma.py.
+The format of the key file can be found in :doc:`keyfile`.
 
 Requirements
 ------------
