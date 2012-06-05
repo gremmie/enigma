@@ -94,13 +94,6 @@ Py-Enigma is written in Python_, specifically Python 3.2. It has no other
 requirements or dependencies.
 
 
-Project Status
---------------
-
-This project is very new and is considered alpha software. However at even this
-stage it is possible to encrypt and decrypt authentic Enigma messages.
-
-
 Installation
 ------------
 
@@ -120,8 +113,11 @@ Once you have obtained a copy of the source somehow, to install::
 Documentation
 -------------
 
-The latest documentation is available at 
-`Read the Docs <http://readthedocs.org/docs/py-enigma/en/latest/>`_.
+The latest documentation is available at `Read the Docs
+<http://readthedocs.org/projects/py-enigma/>`_. There you can `browse the
+documentation online <http://readthedocs.org/docs/py-enigma/en/latest/>`_, or
+`download it in a variety of formats
+<http://readthedocs.org/projects/py-enigma/downloads/>`_.
 
 Sources for the documentation are also included in Sphinx_ format. If you
 install Sphinx you can generate the documentation in several output formats.
