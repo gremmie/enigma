@@ -5,10 +5,11 @@ A historically accurate Enigma Machine library written in Python 3
 ------------------------------------------------------------------
 
 :Author: Brian Neal <bgneal@gmail.com>
-:Version: Alpha
-:Date: May 30, 2012
+:Version: 0.1
+:Date: June 4, 2012
 :Home Page: https://bitbucket.org/bgneal/enigma/
 :License: MIT License (see LICENSE.txt)
+:Documentation: http://readthedocs.org/docs/py-enigma/en/latest/
 :Support: https://bitbucket.org/bgneal/enigma/issues
 
 
@@ -25,7 +26,7 @@ It is my hope that library will be useful to Enigma enthusiasts, historians, and
 students interested in cryptography.
 
 Py-Enigma strives to be Pythonic, easy to use, comes with unit tests, and
-(coming soon) documentation.
+documentation.
 
 
 Scope
@@ -119,10 +120,11 @@ Once you have obtained a copy of the source somehow, to install::
 Documentation
 -------------
 
-I want to use Py-Enigma as a chance to learn Sphinx_, so you can expect to see
-some nicely formatted documentation coming soon. In the meantime, please read
-the source code. I commented it heavily so I could understand how the Enigma
-machine works.
+The latest documentation is available at 
+`Read the Docs <http://readthedocs.org/docs/py-enigma/en/latest/>`_.
+
+Sources for the documentation are also included in Sphinx_ format. If you
+install Sphinx you can generate the documentation in several output formats.
 
 
 Support
