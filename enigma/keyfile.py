@@ -76,4 +76,7 @@ def get_daily_settings(fp, day=None):
         settings['plugboard_settings'] = ' '.join(cols[-11:-1])
         settings['reflector'] = cols[-1]
 
+    else:
+        raise KeyFileError('no entry for day %d found' % day)
+
         return settings
