@@ -12,6 +12,7 @@ import sys
 
 from .machine import EnigmaMachine, EnigmaError
 from .rotors import RotorError
+from .keyfile import KeyFileError
 
 
 PROG_DESC = 'Encrypt/decrypt text according to Enigma machine key settings'
@@ -132,7 +133,7 @@ def main():
 def console_main():
     try:
         main()
-    except (IOError, EnigmaError, RotorError) as ex:
+    except (IOError, EnigmaError, RotorError, KeyFileError) as ex:
         sys.stderr.write("%s\n" % ex)
 
 
