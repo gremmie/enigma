@@ -100,6 +100,12 @@ The ``EnigmaMachine`` class resides in the ``enigma.machine`` module.
          right)
       :rtype: string
 
+   .. method:: get_rotor_count()
+
+      Returns a list of integers that represent the rotation counts for each 
+      rotor. The rotation counts are reset to 0 every time :meth:`set_display`
+      is called.
+
    .. method:: key_press(key)
 
       Simulate a front panel key press. First the rotors are stepped by
