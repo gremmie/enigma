@@ -9,7 +9,7 @@ A historically accurate Enigma Machine library written in Python 3
 :Date: June 4, 2012
 :Home Page: https://bitbucket.org/bgneal/enigma/
 :License: MIT License (see LICENSE.txt)
-:Documentation: http://readthedocs.org/docs/py-enigma/en/latest/
+:Documentation: http://py-enigma.readthedocs.org/
 :Support: https://bitbucket.org/bgneal/enigma/issues
 
 

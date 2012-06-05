@@ -11,7 +11,7 @@ Welcome to Py-Enigma's documentation!
 :Date: |today|
 :Home Page: https://bitbucket.org/bgneal/enigma/
 :License: MIT License (see LICENSE.txt)
-:Documentation: http://readthedocs.org/docs/py-enigma/en/latest/
+:Documentation: http://py-enigma.readthedocs.org/
 :Support: https://bitbucket.org/bgneal/enigma/issues
 
 Py-Enigma is a historically accurate `Enigma machine
