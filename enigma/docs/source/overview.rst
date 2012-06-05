@@ -61,12 +61,9 @@ requirements or dependencies.
 Installation
 ------------
 
-To install or upgrade via PyPI_ use pip_::
+Py-Enigma will by placed on PyPI_ very soon.
 
-   pip install pyenigma             # install
-   pip install --upgrade pyenigma   # upgrade
-
-Alternatively you can download a source .zip or tarball at the `Py-Enigma
+In the meantime, you can download a source .zip or tarball at the `Py-Enigma
 Bitbucket page`_. Once unpacked, you can install with::
 
    python setup.py install
