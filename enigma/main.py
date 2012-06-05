@@ -89,6 +89,8 @@ def main():
             action='store_true',
             help=('if the input text contains chars not found on the enigma'
                   ' keyboard, delete them from the input'))
+    parser.add_argument('-v', '--verbose', action='store_true', default=False,
+            help='provide verbose output; include final rotor positions')
 
     args = parser.parse_args()
 
@@ -118,6 +120,12 @@ def main():
     machine.set_display(args.start)
 
     s = machine.process_text(text, replace_char=replace_char)
+
+    if args.verbose:
+        print('Final rotor positions:', machine.get_display())
+        print('Rotor rotation counts:', machine.get_rotor_counts())
+        print('Output:')
+
     print(s)
 
 

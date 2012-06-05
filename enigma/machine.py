@@ -249,3 +249,7 @@ class EnigmaMachine:
             result.append(self.key_press(c))
 
         return ''.join(result)
+
+    def get_rotor_counts(self):
+        """Return the rotor rotation counts as a list of integers."""
+        return [r.rotations for r in self.rotors]
