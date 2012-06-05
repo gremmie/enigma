@@ -31,7 +31,7 @@ Text to process can be supplied 3 ways:
 Examples:
 
     $ %(prog)s --key-file=enigma.keys -s XYZ -t HELLOXWORLDX
-    $ %(prog)s -r III IV V -i 0 1 2 -p AB CD EF GH IJ KL MN -u B -s XYZ
+    $ %(prog)s -r III IV V -i 1 2 3 -p AB CD EF GH IJ KL MN -u B -s XYZ
     $ %(prog)s -r Beta III IV V -i A B C D -p 1/2 3/4 5/6 -u B-Thin -s WXYZ
   
 """
@@ -71,7 +71,7 @@ def main():
     parser.add_argument('-k', '--key-file',
             help='path to key file for daily settings')
     parser.add_argument('-d', '--day', type=int, default=None,
-            help='use the settings for day DAY when reading keysheet')
+            help='use the settings for day DAY when reading key file')
     parser.add_argument('-r', '--rotors', nargs='+', metavar='ROTOR',
             help='rotor list ordered from left to right; e.g III IV I')
     parser.add_argument('-i', '--ring-settings', nargs='+',
@@ -97,7 +97,7 @@ def main():
 
     if args.key_file and (args.rotors or args.ring_settings or args.plugboard
             or args.reflector):
-        parser.error("Please specify either a keysheet or command-line key "
+        parser.error("Please specify either a key file or command-line key "
                      "settings, but not both")
 
     if args.start is None:
