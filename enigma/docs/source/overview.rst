@@ -61,12 +61,21 @@ requirements or dependencies.
 Installation
 ------------
 
-Py-Enigma will by placed on PyPI_ very soon.
+Py-Enigma is available on the `Python Package Index`_ (PyPI). You can install it
+using pip_::
 
-In the meantime, you can download a source .zip or tarball at the `Py-Enigma
-Bitbucket page`_. Once unpacked, you can install with::
+   $ pip install py-enigma             # install
+   $ pip install --upgrade py-enigma   # upgrade
 
-   python setup.py install
+You may also download a tarball or .zip file of the latest code using the "get
+source" link on the `Py-Enigma Bitbucket page`_. Alternatively if you use
+Mercurial_, you can clone the repository with the following command::
+
+   $ hg clone https://bitbucket.org/bgneal/enigma
+
+If you did not use pip, you can install with this command::
+
+   $ python setup.py install
 
 
 Support & Source
@@ -104,7 +113,7 @@ Machine is on YouTube: `Nadia Baker & Enigma demo`_.
 
 .. _Enigma machines: http://en.wikipedia.org/wiki/Enigma_machine
 .. _Python: http://www.python.org
-.. _PyPI: http://pypi.python.org/pypi
+.. _Python Package Index: http://pypi.python.org/pypi/py-enigma/
 .. _Py-Enigma Bitbucket page: https://bitbucket.org/bgneal/enigma
 .. _pip: http://www.pip-installer.org
 .. _Mercurial: http://mercurial.selenic.com/

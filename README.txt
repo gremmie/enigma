@@ -6,7 +6,7 @@ A historically accurate Enigma Machine library written in Python 3
 
 :Author: Brian Neal <bgneal@gmail.com>
 :Version: 0.1
-:Date: June 4, 2012
+:Date: June 5, 2012
 :Home Page: https://bitbucket.org/bgneal/enigma/
 :License: MIT License (see LICENSE.txt)
 :Documentation: http://py-enigma.readthedocs.org/
@@ -97,15 +97,19 @@ requirements or dependencies.
 Installation
 ------------
 
-After the project gets a bit more mature I will add Py-Enigma to the `Python
-Package Index`_ (PyPI). In the meantime, you may download a tarball or .zip file
-of the latest code using the "get source" link on the `Py-Enigma Bitbucket
-page`_. Alternatively if you use Mercurial_, you can clone the repository with
-the following command::
+Py-Enigma is available on the `Python Package Index`_ (PyPI). You can install it
+using pip_::
+
+   $ pip install py-enigma             # install
+   $ pip install --upgrade py-enigma   # upgrade
+
+You may also download a tarball or .zip file of the latest code using the "get
+source" link on the `Py-Enigma Bitbucket page`_. Alternatively if you use
+Mercurial_, you can clone the repository with the following command::
 
    $ hg clone https://bitbucket.org/bgneal/enigma
 
-Once you have obtained a copy of the source somehow, to install::
+If you did not use pip, you can install with this command::
 
    $ python setup.py install
 
@@ -157,7 +161,8 @@ Machine is on YouTube: `Nadia Baker & Enigma demo`_.
 
 .. _Enigma machines: http://en.wikipedia.org/wiki/Enigma_machine
 .. _Python: http://www.python.org
-.. _Python Package Index: http://pypi.python.org/pypi
+.. _Python Package Index: http://pypi.python.org/pypi/py-enigma/
+.. _pip: http://pip.openplans.org/
 .. _Py-Enigma Bitbucket page: https://bitbucket.org/bgneal/enigma
 .. _Mercurial: http://mercurial.selenic.com/
 .. _Sphinx: http://sphinx.pocoo.org/
