@@ -18,7 +18,10 @@ setup(
     description='A historically accurate Enigma machine simulation library.',
     long_description=open(join(dirname(__file__), 'README.txt')).read(),
     packages=['enigma', 'enigma.rotors', 'enigma.tests'],
-    package_data=dict(enigma=['examples/*.py']),
+    package_data=dict(enigma=['examples/*.py',
+                              'docs/source/*.rst',
+                              'docs/source/*.py',
+                             ]),
     scripts=['pyenigma.py'],
     classifiers = [
         'Development Status :: 3 - Alpha',
