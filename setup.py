@@ -9,7 +9,7 @@ from os.path import join, dirname
 import enigma
 
 setup(
-    name='enigma',
+    name='py-enigma',
     version=enigma.__version__,
     author='Brian Neal',
     author_email='bgneal@gmail.com',
