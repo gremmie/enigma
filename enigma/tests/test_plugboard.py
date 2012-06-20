@@ -112,3 +112,14 @@ class PlugboardTestCase(unittest.TestCase):
                 self.assertEqual(p.signal(n), wiring[n])
             else:
                 self.assertEqual(p.signal(n), n)
+
+    def test_str(self):
+
+        stecker = 'AB CD EF GH IJ KL MN OP QR ST'
+        p = Plugboard.from_key_sheet(stecker)
+
+        self.assertEqual(stecker, p.army_str())
+        self.assertEqual(stecker, str(p))
+
+        navy = '1/2 3/4 5/6 7/8 9/10 11/12 13/14 15/16 17/18 19/20'
+        self.assertEqual(navy, p.navy_str())
