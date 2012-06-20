@@ -8,6 +8,7 @@ component of the Enigma Machine.
 """
 
 import collections
+import copy
 from itertools import chain
 import string
 
@@ -54,6 +55,11 @@ class Plugboard:
         """
         # construct wiring mapping table with default 1-1 mappings
         self.wiring_map = list(range(26))
+
+        # construct backup storage for the wiring map; this is useful when
+        # hill-climbing and is used when the Plugboard is used as a context
+        # manager
+        self._backup_map = list(range(26))
 
         # use settings if provided
         if not wiring_pairs:
@@ -173,3 +179,62 @@ class Plugboard:
 
         """
         return self.wiring_map[n]
+
+    # Support for hill-climbing algorithms:
+
+    def get_wiring(self):
+        """Returns a deep copy of the internal wiring map."""
+        return copy.deepcopy(self.wiring_map)
+
+    def is_wired(self, n):
+        """Returns True if connection n has a cable attached; 0 <= n < 26."""
+        return self.wiring_map[n] != n
+
+    def is_free(self, n):
+        """Returns True if connection n has no cable attached; 0 <= n < 26."""
+        return self.wiring_map[n] == n
+
+    def __enter__(self):
+        """Saves the current state of the wiring map."""
+        for n in range(26):
+            self._backup_map[n] = self.wiring_map[n]
+        return self
+
+    def __exit__(self, *exc_info):
+        """Restores the saved state of the wiring map."""
+        for n in range(26):
+            self.wiring_map[n] = self._backup_map[n]
+
+    def connection(self, n):
+        """Returns plug number [0-25] for what is connected to plug n [0-25]."""
+        return self.wiring_map[n]
+
+    def disconnect(self, n):
+        """Removes cable from plug number n [0-25]."""
+        x = self.wiring_map[n]
+        self.wiring_map[x] = x
+        self.wiring_map[n] = n
+
+    def connect(self, x, y):
+        """Connects plug x to plug y, removing any existing connections first.
+        
+        x and y must be in [0-25].
+
+        """
+        # disconnect any existing connections
+        m = self.wiring_map[x]
+        n = self.wiring_map[y]
+        self.wiring_map[m] = m
+        self.wiring_map[n] = n
+
+        self.wiring_map[x] = y
+        self.wiring_map[y] = x
+
+    def is_connected(self, x, y):
+        """Returns True if x is connected to y.
+
+        x and y must be in [0-25].
+
+        """
+        return self.wiring_map[x] == y and self.wiring_map[y] == x
+
