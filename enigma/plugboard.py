@@ -134,6 +134,33 @@ class Plugboard:
 
         return cls(wiring_pairs)
 
+    def get_pairs(self):
+        """Return the connections as a set of tuple pairs."""
+        pairs = set()
+        for x in range(0, 26):
+            y = self.wiring_map[x]
+            if x != y and (y, x) not in pairs:
+                pairs.add((x, y))
+
+        return pairs
+
+    def army_str(self):
+        """Return settings as a string as found on an army key sheet."""
+        pairs = list(self.get_pairs())
+        pairs.sort()
+        return ' '.join('{}{}'.format(chr(t[0] + ord('A')), 
+                                      chr(t[1] + ord('A'))) for t in pairs)
+
+    def navy_str(self):
+        """Return settings as a string as found on a navy key sheet."""
+        pairs = list(self.get_pairs())
+        pairs.sort()
+        return ' '.join('{}/{}'.format(t[0] + 1, t[1] + 1) for t in pairs)
+
+    def __str__(self):
+        """Returns a string representation of the settings in army format."""
+        return self.army_str()
+
     def signal(self, n):
         """Simulate a signal entering the plugboard on wire n, where n must be
         an integer between 0 and 25.
