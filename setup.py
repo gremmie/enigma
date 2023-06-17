@@ -16,7 +16,7 @@ setup(
     url='https://bitbucket.org/bgneal/enigma/',
     license='MIT',
     description='A historically accurate Enigma machine simulation library.',
-    long_description=open(join(dirname(__file__), 'README.txt')).read(),
+    long_description=open(join(dirname(__file__), 'README.rst'), encoding='utf-8').read(),
     packages=['enigma', 'enigma.rotors', 'enigma.tests'],
     package_data=dict(enigma=['examples/*.py',
                               'docs/source/*.rst',
