@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-# Copyright (C) 2012 by Brian Neal.
+# Copyright (C) 2012 - 2025 by Brian Neal.
 # This file is part of Py-Enigma, the Enigma Machine simulation.
 # Py-Enigma is released under the MIT License (see License.txt).
 
@@ -13,7 +13,7 @@ setup(
     version=enigma.__version__,
     author='Brian Neal',
     author_email='bgneal@gmail.com',
-    url='https://bitbucket.org/bgneal/enigma/',
+    url='https://github.com/gremmie/enigma',
     license='MIT',
     description='A historically accurate Enigma machine simulation library.',
     long_description=open(join(dirname(__file__), 'README.rst'), encoding='utf-8').read(),
@@ -24,7 +24,7 @@ setup(
                              ]),
     scripts=['pyenigma.py'],
     classifiers = [
-        'Development Status :: 3 - Alpha',
+        'Development Status :: 5 - Production/Stable',
         'Environment :: Console',
         'Intended Audience :: End Users/Desktop',
         'Intended Audience :: Developers',

@@ -5,12 +5,12 @@ A historically accurate Enigma Machine library written in Python 3
 ------------------------------------------------------------------
 
 :Author: Brian Neal <bgneal@gmail.com>
-:Version: 0.1
-:Date: June 5, 2012
-:Home Page: https://bitbucket.org/bgneal/enigma/
+:Version: 0.3
+:Date: October 31, 2025
+:Home Page: https://github.com/gremmie/enigma
 :License: MIT License (see LICENSE.txt)
 :Documentation: http://py-enigma.readthedocs.org/
-:Support: https://bitbucket.org/bgneal/enigma/issues
+:Support: https://github.com/gremmie/enigma/issues
 
 
 Overview
@@ -103,15 +103,9 @@ using pip_::
    $ pip install py-enigma             # install
    $ pip install --upgrade py-enigma   # upgrade
 
-You may also download a tarball or .zip file of the latest code using the "get
-source" link on the `Py-Enigma Bitbucket page`_. Alternatively if you use
-Mercurial_, you can clone the repository with the following command::
-
-   $ hg clone https://bitbucket.org/bgneal/enigma
-
-If you did not use pip, you can install with this command::
-
-   $ python setup.py install
+Please note at the time of this update that the version on PyPI is a bit old
+and is in the process of being updated. The lastest version of Py-Enigma can be
+found at the `Py-Enigma GitHub page`_.
 
 
 Documentation
@@ -130,7 +124,7 @@ install Sphinx you can generate the documentation in several output formats.
 Support
 -------
 
-Support is provided at the `issue tracker`_ at the `Py-Enigma Bitbucket page`_.
+Support is provided at the `issue tracker`_ at the `Py-Enigma GitHub page`_.
 If you have general questions or comments, please feel free to email me (address
 at the top of this file). 
 
@@ -163,10 +157,9 @@ Machine is on YouTube: `Nadia Baker & Enigma demo`_.
 .. _Python: http://www.python.org
 .. _Python Package Index: http://pypi.python.org/pypi/py-enigma/
 .. _pip: http://pip.openplans.org/
-.. _Py-Enigma Bitbucket page: https://bitbucket.org/bgneal/enigma
-.. _Mercurial: http://mercurial.selenic.com/
+.. _Py-Enigma GitHub page: https://github.com/gremmie/enigma
 .. _Sphinx: http://sphinx.pocoo.org/
-.. _issue tracker: https://bitbucket.org/bgneal/enigma/issues
+.. _issue tracker: https://github.com/gremmie/enigma/issues
 .. _Cipher Machines and Cryptology website: http://users.telenet.be/d.rijmenants/index.htm
 .. _Technical Details of the Enigma Machine: http://users.telenet.be/d.rijmenants/en/enigmatech.htm
 .. _Enigma simulator: http://users.telenet.be/d.rijmenants/en/enigmasim.htm

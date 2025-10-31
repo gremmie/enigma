@@ -9,10 +9,10 @@ Welcome to Py-Enigma's documentation!
 :Author: Brian Neal <bgneal@gmail.com>
 :Version: |release|
 :Date: |today|
-:Home Page: https://bitbucket.org/bgneal/enigma/
+:Home Page: https://github.com/gremmie/enigma
 :License: MIT License (see LICENSE.txt)
 :Documentation: http://py-enigma.readthedocs.org/
-:Support: https://bitbucket.org/bgneal/enigma/issues
+:Support: https://github.com/gremmie/enigma/issues
 
 Py-Enigma is a historically accurate `Enigma machine
 <http://en.wikipedia.org/wiki/Enigma_machine>`_ simulation library written in

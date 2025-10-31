@@ -67,26 +67,16 @@ using pip_::
    $ pip install py-enigma             # install
    $ pip install --upgrade py-enigma   # upgrade
 
-You may also download a tarball or .zip file of the latest code using the "get
-source" link on the `Py-Enigma Bitbucket page`_. Alternatively if you use
-Mercurial_, you can clone the repository with the following command::
-
-   $ hg clone https://bitbucket.org/bgneal/enigma
-
-If you did not use pip, you can install with this command::
-
-   $ python setup.py install
+Please note at the time of this update that the version on PyPI is a bit old
+and is in the process of being updated. The lastest version of Py-Enigma can be
+found at the `Py-Enigma GitHub page`_.
 
 
 Support & Source
 ----------------
 
-All support takes place at the `Py-Enigma Bitbucket page`_. Please enter any
+All support takes place at the `Py-Enigma GitHub page`_. Please enter any
 feature requests or bugs into the `issue tracker`_.
-
-You may also clone the Mercurial_ source code repository::
-
-   $ hg clone https://bitbucket.org/bgneal/enigma
 
 
 .. _references-label:
@@ -114,10 +104,10 @@ Machine is on YouTube: `Nadia Baker & Enigma demo`_.
 .. _Enigma machines: http://en.wikipedia.org/wiki/Enigma_machine
 .. _Python: http://www.python.org
 .. _Python Package Index: http://pypi.python.org/pypi/py-enigma/
-.. _Py-Enigma Bitbucket page: https://bitbucket.org/bgneal/enigma
+.. _Py-Enigma GitHub page: https://github.com/gremmie/enigma
 .. _pip: http://www.pip-installer.org
 .. _Mercurial: http://mercurial.selenic.com/
-.. _issue tracker: https://bitbucket.org/bgneal/enigma/issues
+.. _issue tracker: https://github.com/gremmie/enigma/issues
 .. _Cipher Machines and Cryptology website: http://users.telenet.be/d.rijmenants/index.htm
 .. _Technical Details of the Enigma Machine: http://users.telenet.be/d.rijmenants/en/enigmatech.htm
 .. _Enigma simulator: http://users.telenet.be/d.rijmenants/en/enigmasim.htm
