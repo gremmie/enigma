@@ -11,4 +11,4 @@ configuring an EnigmaMachine object with the suitable rotors and reflectors.
 For a list of the rotors and reflectors we simulate, see the module rotors.data.
 
 """
-__version__ = '0.1'
+__version__ = '0.3'
