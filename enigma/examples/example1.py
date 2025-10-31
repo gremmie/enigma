@@ -5,7 +5,7 @@ from enigma.machine import EnigmaMachine
 machine = EnigmaMachine.from_key_sheet(
        rotors='II IV V',
        reflector='B',
-       ring_settings=[1, 20, 11],
+       ring_settings='2 21 12',
        plugboard_settings='AV BS CG DL FU HZ IN KM OW RX')
 
 # set machine initial starting position
