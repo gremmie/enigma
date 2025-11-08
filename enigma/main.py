@@ -33,7 +33,7 @@ Examples:
     $ %(prog)s --key-file=enigma.keys -s XYZ -t HELLOXWORLDX
     $ %(prog)s -r III IV V -i 1 2 3 -p AB CD EF GH IJ KL MN -u B -s XYZ
     $ %(prog)s -r Beta III IV V -i A B C D -p 1/2 3/4 5/6 -u B-Thin -s WXYZ
-  
+
 """
 
 def create_from_key_file(filename, day=None):
@@ -67,7 +67,7 @@ def main():
 
     parser = argparse.ArgumentParser(description=PROG_DESC, epilog=HELP_EPILOG,
             formatter_class=argparse.RawDescriptionHelpFormatter)
-    
+
     parser.add_argument('-k', '--key-file',
             help='path to key file for daily settings')
     parser.add_argument('-d', '--day', type=int, default=None,

@@ -1,5 +1,0 @@
-syntax: glob
-*.pyc
-*.swp
-enigma/docs/build
-dist

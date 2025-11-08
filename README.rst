@@ -4,13 +4,13 @@ Py-Enigma
 A historically accurate Enigma Machine library written in Python 3
 ------------------------------------------------------------------
 
-:Author: Brian Neal <bgneal@gmail.com>
-:Version: 0.3
-:Date: October 31, 2025
-:Home Page: https://github.com/gremmie/enigma
-:License: MIT License (see LICENSE.txt)
-:Documentation: http://py-enigma.readthedocs.org/
-:Support: https://github.com/gremmie/enigma/issues
+- **Author:** Brian Neal <bgneal@gmail.com>
+- **Version:** 1.0.0
+- **Date:** November 7, 2025
+- **Home Page:** https://github.com/gremmie/enigma
+- **License:** MIT License (see LICENSE.txt)
+- **Documentation:** http://py-enigma.readthedocs.org/
+- **Support:** https://github.com/gremmie/enigma/issues
 
 
 Overview
@@ -79,9 +79,9 @@ Py-Enigma also includes a command-line application for processing messages.
 Assuming you have a proper key file that contains the same initial settings as
 the code above, the above example can be performed on the command-line::
 
-   $ pyenigma.py --key-file=keys.txt --start=WXC --text='KCH'
+   $ pyenigma --key-file=keys.txt --start=WXC --text='KCH'
    BLA
-   $ pyenigma.py --key-file=keys.txt --start=BLA --text='NIBLFMYMLLUFWCASCSSNVHAZ'
+   $ pyenigma --key-file=keys.txt --start=BLA --text='NIBLFMYMLLUFWCASCSSNVHAZ'
    THEXRUSSIANSXAREXCOMINGX
 
 The format of the key file can be found in the documentation.
@@ -100,12 +100,12 @@ Installation
 Py-Enigma is available on the `Python Package Index`_ (PyPI). You can install it
 using pip_::
 
-   $ pip install py-enigma             # install
-   $ pip install --upgrade py-enigma   # upgrade
+   $ python3 -m pip install py-enigma
 
-Please note at the time of this update that the version on PyPI is a bit old
-and is in the process of being updated. The lastest version of Py-Enigma can be
-found at the `Py-Enigma GitHub page`_.
+If you aren't familiar with installing Python packages, please see, for
+example, the `Python Packaging Installing Packages tutorial`_.
+
+The latest version of Py-Enigma can always be found at the `Py-Enigma GitHub page`_.
 
 
 Documentation
@@ -156,6 +156,7 @@ Machine is on YouTube: `Nadia Baker & Enigma demo`_.
 .. _Enigma machines: http://en.wikipedia.org/wiki/Enigma_machine
 .. _Python: http://www.python.org
 .. _Python Package Index: http://pypi.python.org/pypi/py-enigma/
+.. _Python Packaging Installing Packages tutorial: https://packaging.python.org/en/latest/tutorials/installing-packages/
 .. _pip: http://pip.openplans.org/
 .. _Py-Enigma GitHub page: https://github.com/gremmie/enigma
 .. _Sphinx: http://sphinx.pocoo.org/
