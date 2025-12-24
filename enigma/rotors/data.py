@@ -1,4 +1,4 @@
-# Copyright (C) 2012 by Brian Neal.
+# Copyright (C) 2012 - 2025 by Brian Neal.
 # This file is part of Py-Enigma, the Enigma Machine simulation.
 # Py-Enigma is released under the MIT License (see License.txt).
 
@@ -8,8 +8,8 @@ we simulate.
 """
 
 # This data is taken from Dirk Rijmenants very informative and useful Enigma
-# website: "Techical Details of the Engigma Machine"
-# http://users.telenet.be/d.rijmenants/en/enigmatech.htm
+# website: "Technical Details of the Enigma Machine"
+# https://www.ciphermachinesandcryptology.com/en/enigmatech.htm
 #
 # Rotors I-V were used by the Heer, Luftwaffe, and Kriegsmarine. The
 # Kriegsmarine added rotors VI-VIII to the M3 model, and added Beta & Gamma to
