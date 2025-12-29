@@ -1,4 +1,4 @@
-# Copyright (C) 2012 by Brian Neal.
+# Copyright (C) 2012 - 2025 by Brian Neal.
 # This file is part of Py-Enigma, the Enigma Machine simulation.
 # Py-Enigma is released under the MIT License (see License.txt).
 
@@ -75,8 +75,8 @@ class EnigmaMachine:
         reflector: a string that names the reflector to use
 
         plugboard_settings: a string of plugboard settings as you might find
-        on a key sheet; e.g. 
-            'PO ML IU KJ NH YT GB VF RE DC' 
+        on a key sheet; e.g.
+            'PO ML IU KJ NH YT GB VF RE DC'
         or
             '18/26 17/4 21/6 3/16 19/14 22/7 8/1 12/25 5/9 10/15'
 
@@ -110,7 +110,7 @@ class EnigmaMachine:
         # assemble the machine
         rotor_list = [create_rotor(r[0], r[1]) for r in zip(rotors, ring_settings)]
 
-        return cls(rotor_list, 
+        return cls(rotor_list,
                    create_reflector(reflector),
                    Plugboard.from_key_sheet(plugboard_settings))
 
@@ -121,7 +121,7 @@ class EnigmaMachine:
         fp - a file-like object that contains daily key settings
         day - the line labeled with the day number (1-31) will be used for the
         settings. If day is None, the day number will be determined from today's
-        date. 
+        date.
 
         For more information on the file format, see keyfile.py.
 
@@ -145,17 +145,15 @@ class EnigmaMachine:
     def get_display(self):
         """Returns the operator display as a string."""
 
-        return "{}{}{}".format(self.rotors[-3].get_display(),
-                               self.rotors[-2].get_display(),
-                               self.rotors[-1].get_display())
+        return ''.join(r.get_display() for r in self.rotors)
 
     def key_press(self, key):
-        """Simulate a front panel key press. 
+        """Simulate a front panel key press.
 
         key - a string representing the letter pressed
 
         The rotors are stepped by simulating the mechanical action of the
-        machine. 
+        machine.
         Next a simulated current is run through the machine.
         The lamp that is lit by this key press is returned as a string.
 
@@ -173,7 +171,7 @@ class EnigmaMachine:
 
     def _step_rotors(self):
         """Simulate the mechanical action of pressing a key."""
-        
+
         # The right-most rotor's right-side ratchet is always over a pawl, and
         # it has no neighbor to the right, so it always rotates.
         #
@@ -240,7 +238,7 @@ class EnigmaMachine:
         for key in text:
             c = key.upper()
 
-            if c not in KEYBOARD_SET: 
+            if c not in KEYBOARD_SET:
                 if replace_char:
                     c = replace_char
                 else:

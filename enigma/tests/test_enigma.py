@@ -14,11 +14,10 @@ class SteppingTestCase(unittest.TestCase):
     def test_double_stepping(self):
         """Ensure the rotors step realistically by testing for a "double-step"
         case.
-        
+
         """
-        # This example taken from 
-        # http://users.telenet.be/d.rijmenants/en/enigmatech.htm
-        # in the section on "The Stepping Mechanism."
+        # This example taken from
+        # https://www.ciphermachinesandcryptology.com/en/enigmatech.htm#steppingmechanism
         m = EnigmaMachine.from_key_sheet(rotors=['III', 'II', 'I'])
 
         m.set_display('KDO')
@@ -52,10 +51,10 @@ class SimpleCipherTestCase(unittest.TestCase):
 
 class ActualDecryptTestCase(unittest.TestCase):
     """This example taken from Dirk Rijmenants' simulator manual.
-    
+
     It is credited to Frode Weierud and Geoff Sullivan.
         http://cryptocellar.com
-    
+
     """
     def setUp(self):
 
@@ -98,7 +97,7 @@ class ActualDecryptTestCase(unittest.TestCase):
         )
 
         truth_data = (
-            'AUFKL XABTE ILUNG XVONX' 
+            'AUFKL XABTE ILUNG XVONX'
             'KURTI NOWAX KURTI NOWAX'
             'NORDW ESTLX SEBEZ XSEBE'
             'ZXUAF FLIEG ERSTR ASZER'
@@ -124,12 +123,12 @@ class ActualDecryptTestCase(unittest.TestCase):
         )
 
         truth_data = (
-            'DREIG EHTLA NGSAM ABERS' 
-            'IQERV ORWAE RTSXE INSSI' 
-            'EBENN ULLSE QSXUH RXROE' 
-            'MXEIN SXINF RGTXD REIXA' 
-            'UFFLI EGERS TRASZ EMITA' 
-            'NFANG XEINS SEQSX KMXKM' 
+            'DREIG EHTLA NGSAM ABERS'
+            'IQERV ORWAE RTSXE INSSI'
+            'EBENN ULLSE QSXUH RXROE'
+            'MXEIN SXINF RGTXD REIXA'
+            'UFFLI EGERS TRASZ EMITA'
+            'NFANG XEINS SEQSX KMXKM'
             'XOSTW XKAME NECXK'
         )
 
@@ -186,3 +185,4 @@ class KriegsmarineTestCase(unittest.TestCase):
         ).replace(' ', '')
 
         self.assertEqual(plaintext, truth_data)
+        self.assertEqual(machine.get_display(), 'VJWY')

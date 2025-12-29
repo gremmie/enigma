@@ -108,9 +108,9 @@ Machine is on YouTube: `Nadia Baker & Enigma demo`_.
 .. _pip: http://www.pip-installer.org
 .. _Mercurial: http://mercurial.selenic.com/
 .. _issue tracker: https://github.com/gremmie/enigma/issues
-.. _Cipher Machines and Cryptology website: http://users.telenet.be/d.rijmenants/index.htm
-.. _Technical Details of the Enigma Machine: http://users.telenet.be/d.rijmenants/en/enigmatech.htm
-.. _Enigma simulator: http://users.telenet.be/d.rijmenants/en/enigmasim.htm
+.. _Cipher Machines and Cryptology website: https://www.ciphermachinesandcryptology.com
+.. _Technical Details of the Enigma Machine: https://www.ciphermachinesandcryptology.com/en/enigmatech.htm
+.. _Enigma simulator: https://www.ciphermachinesandcryptology.com/en/enigmasim.htm
 .. _Enigma Museum: http://w1tp.com/enigma/
 .. _The Enigma and the Bombe: http://www.ellsbury.com/enigmabombe.htm
 .. _Nadia Baker & Enigma demo: http://youtu.be/HBHYAzuVeWc
