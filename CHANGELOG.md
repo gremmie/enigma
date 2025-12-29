@@ -1,4 +1,10 @@
-# M209 Changelog
+# Changelog
+
+## Version 1.0.1 - December 29, 2025
+
+- Fixed a bug with M4 `get_display()`
+- Fixed some broken links
+- Fixed some typos in comments
 
 ## Version 1.0.0 - November 7, 2025
 

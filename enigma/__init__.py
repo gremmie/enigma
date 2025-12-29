@@ -1,4 +1,4 @@
-# Copyright (C) 2012 by Brian Neal.
+# Copyright (C) 2012 - 2025 by Brian Neal.
 # This file is part of Py-Enigma, the Enigma Machine simulation.
 # Py-Enigma is released under the MIT License (see License.txt).
 
@@ -11,4 +11,4 @@ configuring an EnigmaMachine object with the suitable rotors and reflectors.
 For a list of the rotors and reflectors we simulate, see the module rotors.data.
 
 """
-__version__ = '1.0.0'
+__version__ = '1.0.1'
