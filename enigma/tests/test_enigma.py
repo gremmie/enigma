@@ -186,3 +186,87 @@ class KriegsmarineTestCase(unittest.TestCase):
 
         self.assertEqual(plaintext, truth_data)
         self.assertEqual(machine.get_display(), 'VJWY')
+
+
+class SharnhorstDecryptTestCase(unittest.TestCase):
+    """This is the Scharnhorst message taken from
+    https://www.bytereef.org/m4-project-scharnhorst-break.html
+
+    """
+    def test_decrypt(self):
+        stecker = 'AN EZ HK IJ LR MQ OT PV SW UX'
+
+        machine = EnigmaMachine.from_key_sheet(
+                    rotors='III VI VIII',
+                    ring_settings='A H M',
+                    reflector='B',
+                    plugboard_settings=stecker)
+
+        ciphertext = ('ykaenzapmschzbfocuvmrmdpycofhadzizmefxthflolpzlfggbotg'
+                      'oxgretdwtjiqhlmxvjwkzuastr')
+
+        machine.set_display('UZV')
+        plaintext = machine.process_text(ciphertext)
+
+        truth_data = ('steuerejtanafjordjanstandortquaaacccvierneunneunzwofah'
+                      'rtzwonulsmxxscharnhorsthco').upper()
+
+        self.assertEqual(plaintext, truth_data)
+
+
+class M4ProjectSecondBreakTestCase(unittest.TestCase):
+    """Taken from https://www.bytereef.org/m4-project-second-break.html"""
+
+    def test_decrypt(self):
+        stecker = 'AT CL DH EP FG IO JN KQ MU RX'
+
+        machine = EnigmaMachine.from_key_sheet(
+                    rotors='Beta II IV I',
+                    ring_settings='A A N V',
+                    reflector='B-Thin',
+                    plugboard_settings=stecker)
+
+        ciphertext = (
+            'tmkfnwzxffiiyxutihwmdhxifzeqvkdvmqswbqndyozftiwmjhxhyrpaczugrremvpanwxgtkthn'
+            'rlvhkzpgmnmvsecvckhoinplhhpvpxkmbhokccpdpevxvvhozzqbiyieouseznhjkwhydagtxdjd'
+            'jkjpkcsdsuztqcxjdvlpamgqkkshphvksvpcbuwzfizpfuup')
+
+        machine.set_display('MCSF')
+        plaintext = machine.process_text(ciphertext)
+
+        truth_data = (
+            'vvvjschreederjaufgeleitkursfuenffuenfgradnichtsgefundenymarscaierebefohlenes'
+            'quadratxstanrortmarquantonjotadreineunneunfuenfxsssooovieryseedremyeinsnulyy'
+            'einsnulbedecktyzwoachtmbsteigtynbbelsichteinssmt').upper();
+
+        self.assertEqual(plaintext, truth_data)
+
+
+class HmsHurricaneInterceptTestCase(unittest.TestCase):
+    """ Taken from
+    https://www.enigma.hoerenberg.com/index.php?cat=M4%20Project%202006&page=Rasch%20Message
+
+    """
+    def test_decrypt(self):
+        stecker = 'BQ CR DI EJ KW MT OS PX UZ GH'
+
+        machine = EnigmaMachine.from_key_sheet(
+                    rotors='Beta VI I III',
+                    ring_settings='Z Z D G',
+                    reflector='B-Thin',
+                    plugboard_settings=stecker)
+
+        ciphertext = (
+            'HCEYZTCSOPUPPZDICQRDLWXXFACTTJMBRDVCJJMMZRPYIKHZAWGLYXWTMJPQUEFSZBOTVR'
+            'LALZXWVXTSLFFFAUDQFBWRRYAPSBOWJMKLDUYUPFUQDOWVHAHCDWAUARSWTKOFVOYFPUFH'
+            'VZFDGGPOOVGRMBPXXZCANKMONFHXPCKHJZBUMXJWXKAUODXZUCVCXPFT')
+
+        machine.set_display('NAQL')
+        plaintext = machine.process_text(ciphertext)
+
+        truth_data = (
+            'BOOTKLARXBEIJSCHNOORBETWAZWOSIBENXNOVXSECHSNULCBMXPROVIANTBISZWONULXDE'
+            'ZXBENOETIGEGLMESERYNOCHVIEFKLHRXSTEHEMARQUBRUNOBRUNFZWOFUHFXLAGWWIEJKC'
+            'HAEFERJXNNTWWWFUNFYEINSFUNFMBSTEIGENDYGUTESIWXDVVVJRASCH')
+
+        self.assertEqual(plaintext, truth_data)
