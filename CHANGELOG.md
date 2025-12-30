@@ -1,5 +1,9 @@
 # Changelog
 
+## Version 1.0.2 - December 30, 2025
+
+- Add more unit tests based on M4 Project decrypts.
+
 ## Version 1.0.1 - December 29, 2025
 
 - Fixed a bug with M4 `get_display()`

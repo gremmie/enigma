@@ -5,8 +5,8 @@ A historically accurate Enigma Machine library written in Python 3
 ------------------------------------------------------------------
 
 - **Author:** Brian Neal <bgneal@gmail.com>
-- **Version:** 1.0.1
-- **Date:** December 29, 2025
+- **Version:** 1.0.2
+- **Date:** December 30, 2025
 - **Home Page:** https://github.com/gremmie/enigma
 - **License:** MIT License (see LICENSE.txt)
 - **Documentation:** http://py-enigma.readthedocs.org/
